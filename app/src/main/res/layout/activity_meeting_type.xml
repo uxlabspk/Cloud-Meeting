@@ -36,7 +36,7 @@
 
         />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/btn_edu_meeting"
         android:layout_width="320dp"
         android:layout_height="0dp"
@@ -56,7 +56,7 @@
         android:drawableEnd="@drawable/ic_arrow_right"
         />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/btn_bus_meeting"
         android:layout_width="320dp"
         android:layout_height="0dp"

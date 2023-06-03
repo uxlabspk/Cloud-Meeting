@@ -165,7 +165,7 @@
 
     </LinearLayout>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/button"
         android:layout_width="320dp"
         android:layout_height="0dp"

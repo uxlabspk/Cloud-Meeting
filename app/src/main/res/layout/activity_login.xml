@@ -83,7 +83,7 @@
         android:fontFamily="@font/sfregular"
         />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/login_button"
         android:layout_width="320dp"
         android:layout_height="0dp"

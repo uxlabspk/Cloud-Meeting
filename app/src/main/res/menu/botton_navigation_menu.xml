@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edu_chat"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chat" />
+
+    <item
+        android:id="@+id/edu_classes"
+        android:icon="@drawable/ic_classes"
+        android:title="@string/clases" />
+
+    <item
+        android:id="@+id/edu_lectures"
+        android:icon="@drawable/ic_lectures"
+        android:title="@string/lectures" />
+
+    <item
+        android:id="@+id/edu_quizzes"
+        android:icon="@drawable/ic_quizz"
+        android:title="@string/quizes" />
+
+    <item
+        android:id="@+id/edu_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile" />
+
+</menu>

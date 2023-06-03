@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Cloud Meeting</string>
+
+    <string name="createAccountText">"Don't have an account? <u>Create new one</u>"</string>
+    <string name="alreadyAccountText">"Already have an account? <u>Login</u>"</string>
+    <string name="chat">Chat</string>
+    <string name="clases">Classes</string>
+    <string name="lectures">Lectures</string>
+    <string name="quizes">Quizzes</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_profile_str">user profile image</string>
+</resources>

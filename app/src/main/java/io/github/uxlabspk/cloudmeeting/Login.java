@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity {
             EditText userName = (EditText) findViewById( R.id.signin_user_email);
             EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
 
-            if (userName.getText().toString().equals("naveed@uxlabspk.io") && userPassword.getText().toString().equals("test"))
+            if (userName.getText().toString().equals("muhammadnaveedcis@gmail.com") && userPassword.getText().toString().equals("test"))
             {
                 Toast.makeText(this, "Test login granted!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(Login.this, MainActivity.class);

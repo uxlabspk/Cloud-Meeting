@@ -1,5 +1,6 @@
 package io.github.uxlabspk.cloudmeeting;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -40,8 +41,12 @@ public class Login extends AppCompatActivity {
 
         TextView resetPassword = (TextView) findViewById(R.id.resetPassword);
         resetPassword.setOnClickListener(view -> {
-            Toast.makeText(this, "Check your email reset link!", Toast.LENGTH_LONG).show();
-            // TODO : Send user password reset link
+            EditText userName = (EditText) findViewById(R.id.signin_user_email);
+            if (!userName.getText().toString().isEmpty())
+            {
+                Toast.makeText(this, "Check your email for reset link!", Toast.LENGTH_LONG).show();
+                // TODO : Send user password reset link
+            }
         });
 
         // --------------------- HARD CODED LOGIN CREDENTIALS ------------------------------- //

@@ -121,7 +121,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout"
         android:layout_marginTop="20dp"
-        android:background="@drawable/bg_input"
+        android:background="@drawable/bg_spinner"
         android:spinnerMode="dropdown"
         android:fontFamily="@font/sfregular"
         android:paddingStart="3dp"

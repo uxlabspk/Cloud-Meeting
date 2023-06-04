@@ -78,7 +78,7 @@
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/bg_input"
+        android:background="@drawable/bg_spinner"
         android:contentDescription="User Types"
         android:fontFamily="@font/sfregular"
         android:paddingStart="3dp"

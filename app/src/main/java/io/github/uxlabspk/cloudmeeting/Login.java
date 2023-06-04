@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
     private String meeting_type;
-    private Spinner user_types;
+    private Spinner user_Roles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +38,22 @@ public class Login extends AppCompatActivity {
             startActivity(i);
         });
 
+        TextView resetPassword = (TextView) findViewById(R.id.resetPassword);
+        resetPassword.setOnClickListener(view -> {
+            Toast.makeText(this, "Check your email reset link!", Toast.LENGTH_LONG).show();
+            // TODO : Send user password reset link
+        });
+
         // --------------------- HARD CODED LOGIN CREDENTIALS ------------------------------- //
+        // TODO : Create a functional login with firebase...
+
         Button login_button = (Button) findViewById(R.id.login_button);
         login_button.setOnClickListener(view -> {
 
             EditText userName = (EditText) findViewById( R.id.signin_user_email);
             EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
 
-            if (userName.getText().toString().equals("naveed@uxlabspk.github.io") && userPassword.getText().toString().equals("test"))
+            if (userName.getText().toString().equals("naveed@uxlabspk.io") && userPassword.getText().toString().equals("test"))
             {
                 Toast.makeText(this, "Test login granted!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(Login.this, MainActivity.class);
@@ -60,20 +68,20 @@ public class Login extends AppCompatActivity {
 
     private void set_Spinner_Items(String meeting_type)
     {
-        user_types = (Spinner) findViewById(R.id.user_types);
+        user_Roles = (Spinner) findViewById(R.id.user_types);
         if (meeting_type.equals("bus"))
         {
-            String[] testArray = {"Admin", "Employee"};
+            String[] userRolesArray = {"Admin", "Employee"};
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_dropdown_item, testArray );
-            user_types.setAdapter(spinnerArrayAdapter);
+                    this, android.R.layout.simple_spinner_dropdown_item, userRolesArray );
+            user_Roles.setAdapter(spinnerArrayAdapter);
         }
         else
         {
-            String[] testArray = {"Teacher", "Students", "Parent"};
+            String[] userRolesArray = {"Teacher", "Students", "Parent"};
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_dropdown_item, testArray );
-            user_types.setAdapter(spinnerArrayAdapter);
+                    this, android.R.layout.simple_spinner_dropdown_item, userRolesArray );
+            user_Roles.setAdapter(spinnerArrayAdapter);
         }
     }
 }

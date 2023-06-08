@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+
+
 public class Signup extends AppCompatActivity {
 
     private String meeting_type;

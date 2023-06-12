@@ -67,8 +67,6 @@ public class Login extends AppCompatActivity {
         });
 
         // --------------------- HARD CODED LOGIN CREDENTIALS ------------------------------- //
-        EditText userName = (EditText) findViewById( R.id.signin_user_email);
-        EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
         Button login_button = (Button) findViewById(R.id.login_button);
 
         progressDialog = new ProgressDialog(this);
@@ -107,14 +105,17 @@ public class Login extends AppCompatActivity {
 
     private void performLogin()
     {
+        EditText userName = (EditText) findViewById( R.id.signin_user_email);
+        EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
+
         String email = userName.getText().toString();
         String password = userPassword.getText().toString();
 
         if(!email.matches(emailPattern)){
             userName.setError("Enter a correct Email");
-        } else if (password.isEmpty() || password.length()<8)
+        } else if (password.isEmpty() || password.length()<6)
         {
-            userPassword.setError("Enter at least 8 alphanumeric keys for password");
+            userPassword.setError("Enter at least 6 alphanumeric keys for password");
         } else{
             progressDialog.setMessage("Please wait while Login...");
             progressDialog.setTitle("Login");
@@ -127,6 +128,7 @@ public class Login extends AppCompatActivity {
                     if(task.isSuccessful()){
                         progressDialog.dismiss();
                         startActivity(new Intent(Login.this, MainActivity.class));
+                        finish();
                         //sendUserToNextActivity();
                         Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_LONG).show();
                     }else

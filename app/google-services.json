@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "132145431880",
+    "project_id": "cloud-meeting-a1aeb",
+    "storage_bucket": "cloud-meeting-a1aeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132145431880:android:e5064b37117b8458b59f7d",
+        "android_client_info": {
+          "package_name": "io.github.uxlabspk.cloudmeeting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132145431880-21re9qu1vguprp7oqaka5feon9qdkqa3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB15EMlLhAu_Fb7NUKumh1eFlW3djrhVKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132145431880-21re9qu1vguprp7oqaka5feon9qdkqa3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

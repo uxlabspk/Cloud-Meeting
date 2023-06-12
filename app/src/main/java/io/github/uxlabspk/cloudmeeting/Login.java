@@ -1,6 +1,5 @@
 package io.github.uxlabspk.cloudmeeting;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -31,7 +30,7 @@ public class Login extends AppCompatActivity {
 
         set_Spinner_Items(meeting_type);
 
-        TextView create_account_link = findViewById(R.id.create_account_link);
+        TextView create_account_link = (TextView) findViewById(R.id.create_account_link);
 
         create_account_link.setOnClickListener(view -> {
             Intent i = new Intent(Login.this, Signup.class);

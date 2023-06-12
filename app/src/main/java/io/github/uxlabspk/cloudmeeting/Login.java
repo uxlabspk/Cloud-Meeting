@@ -1,9 +1,12 @@
 package io.github.uxlabspk.cloudmeeting;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,9 +14,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Login extends AppCompatActivity {
     private String meeting_type;
     private Spinner user_Roles;
+
+    private EditText userName;
+
+    private EditText userPassword;
+
+    private String emailPattern = "[a-zA-Z\\d._-]+@[a-z]+\\.+[a-z]+";
+    private ProgressDialog progressDialog;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,25 +67,76 @@ public class Login extends AppCompatActivity {
         });
 
         // --------------------- HARD CODED LOGIN CREDENTIALS ------------------------------- //
-        // TODO : Create a functional login with firebase...
-
+        EditText userName = (EditText) findViewById( R.id.signin_user_email);
+        EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
         Button login_button = (Button) findViewById(R.id.login_button);
-        login_button.setOnClickListener(view -> {
 
-            EditText userName = (EditText) findViewById( R.id.signin_user_email);
-            EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
+        progressDialog = new ProgressDialog(this);
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
-            if (userName.getText().toString().equals("muhammadnaveedcis@gmail.com") && userPassword.getText().toString().equals("test"))
+        login_button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
             {
-                Toast.makeText(this, "Test login granted!", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(Login.this, MainActivity.class);
-                startActivity(i);
-            }
-            else
-            {
-                Toast.makeText(this, "Invalid test login credentials", Toast.LENGTH_LONG).show();
+                performLogin();
             }
         });
+
+        // TODO : Create a functional login with firebase...
+
+//        Button login_button = (Button) findViewById(R.id.login_button);
+//        login_button.setOnClickListener(view -> {
+//
+//            EditText userName = (EditText) findViewById( R.id.signin_user_email);
+//            EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
+//
+//            if (userName.getText().toString().equals("muhammadnaveedcis@gmail.com") && userPassword.getText().toString().equals("test"))
+//            {
+//                Toast.makeText(this, "Test login granted!", Toast.LENGTH_LONG).show();
+//                Intent i = new Intent(Login.this, MainActivity.class);
+//                startActivity(i);
+//            }
+//            else
+//            {
+//                Toast.makeText(this, "Invalid test login credentials", Toast.LENGTH_LONG).show();
+//            }
+//        });
+    }
+
+    private void performLogin()
+    {
+        String email = userName.getText().toString();
+        String password = userPassword.getText().toString();
+
+        if(!email.matches(emailPattern)){
+            userName.setError("Enter a correct Email");
+        } else if (password.isEmpty() || password.length()<8)
+        {
+            userPassword.setError("Enter at least 8 alphanumeric keys for password");
+        } else{
+            progressDialog.setMessage("Please wait while Login...");
+            progressDialog.setTitle("Login");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        progressDialog.dismiss();
+                        startActivity(new Intent(Login.this, MainActivity.class));
+                        //sendUserToNextActivity();
+                        Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_LONG).show();
+                    }else
+                    {
+                        progressDialog.dismiss();
+                        Toast.makeText(Login.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
     private void set_Spinner_Items(String meeting_type)

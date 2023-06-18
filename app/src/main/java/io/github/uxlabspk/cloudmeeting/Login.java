@@ -64,6 +64,10 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(this, "Check your email for reset link!", Toast.LENGTH_LONG).show();
                 // TODO : Send user password reset link
             }
+            else
+            {
+                Toast.makeText(this, "Please enter your email for reset link", Toast.LENGTH_LONG).show();
+            }
         });
 
         // --------------------- HARD CODED LOGIN CREDENTIALS ------------------------------- //
@@ -73,34 +77,15 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        login_button.setOnClickListener(new View.OnClickListener()
+        // firebase login click event
+        /* public void onClick(View v)
         {
-            @Override
-            public void onClick(View v)
-            {
-                performLogin();
-            }
+            performLogin();
+        }*/
+        login_button.setOnClickListener(v -> {
+            Intent newIntent = new Intent(Login.this, MainActivity.class);
+            startActivity(newIntent);
         });
-
-        // TODO : Create a functional login with firebase...
-
-//        Button login_button = (Button) findViewById(R.id.login_button);
-//        login_button.setOnClickListener(view -> {
-//
-//            EditText userName = (EditText) findViewById( R.id.signin_user_email);
-//            EditText userPassword = (EditText) findViewById(R.id.signin_user_password);
-//
-//            if (userName.getText().toString().equals("muhammadnaveedcis@gmail.com") && userPassword.getText().toString().equals("test"))
-//            {
-//                Toast.makeText(this, "Test login granted!", Toast.LENGTH_LONG).show();
-//                Intent i = new Intent(Login.this, MainActivity.class);
-//                startActivity(i);
-//            }
-//            else
-//            {
-//                Toast.makeText(this, "Invalid test login credentials", Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 
     private void performLogin()

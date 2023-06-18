@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Cloud Meeting</string>
 
-    <string name="createAccountText">"Don't have an account? <u>Create new one</u>"</string>
-    <string name="alreadyAccountText">"Already have an account? <u>Login</u>"</string>
+    <string name="createAccountText"><u>Create new one</u>"</string>
+    <string name="alreadyAccountText"><u>Login</u>"</string>
     <string name="chat">Chat</string>
     <string name="clases">Classes</string>
     <string name="lectures">Lectures</string>

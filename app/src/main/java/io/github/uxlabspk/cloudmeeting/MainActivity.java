@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.View;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new ChatFragment());
         fragmentTransaction.commit();
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {

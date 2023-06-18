@@ -37,7 +37,9 @@
 
     <EditText
         android:id="@+id/signin_user_email"
-        android:layout_width="320dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/bg_input"
         android:textColor="@color/input_txt_color"
@@ -56,7 +58,9 @@
 
     <EditText
         android:id="@+id/signin_user_password"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_height="48dp"
         android:background="@drawable/bg_input"
         android:textColor="@color/input_txt_color"
@@ -76,7 +80,9 @@
 
     <Spinner
         android:id="@+id/user_types"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_spinner"
@@ -95,16 +101,19 @@
         android:textAlignment="textEnd"
         android:fontFamily="@font/sfregular"
         android:textColor="@color/txt_color"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:layout_marginTop="20dp"
-        android:paddingEnd="30dp"
         android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_height="wrap_content"
         />
 
     <android.widget.Button
         android:id="@+id/login_button"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_primary"
@@ -114,22 +123,37 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resetPassword"
-        android:fontFamily="@font/sfregular"
-        android:textColor="@color/btn_color"
+        android:fontFamily="@font/sfbold"
+        android:textColor="@color/white"
         app:backgroundTint="@color/primary_color"
         />
 
-    <TextView
-        android:id="@+id/create_account_link"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_button"
-        android:layout_marginTop="20dp"
-        android:text="@string/createAccountText"
-        android:fontFamily="@font/sfregular"
-        android:textSize="16dp"
-        />
+        android:layout_marginTop="20dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? "
+            android:textColor="@color/txt_color"
+            android:fontFamily="@font/sfregular"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/create_account_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createAccountText"
+            android:textColor="@color/primary_color"
+            android:fontFamily="@font/sfregular"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

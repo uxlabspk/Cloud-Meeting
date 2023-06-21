@@ -10,20 +10,19 @@
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_meeting_types"
+        android:layout_height="320dp"
+        android:contentDescription="app logo"
+        android:src="@drawable/meeting_illustration"
         android:layout_marginTop="180dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="app logo"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="0dp"
         android:textColor="@color/txt_color"
         android:text="Which type of Meeting you want?"
         android:textFontWeight="900"

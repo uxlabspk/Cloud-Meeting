@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import io.github.uxlabspk.cloudmeeting.Fragments.ChatFragment;
 import io.github.uxlabspk.cloudmeeting.Fragments.ClassesFragment;
 import io.github.uxlabspk.cloudmeeting.Fragments.LecturesFragment;

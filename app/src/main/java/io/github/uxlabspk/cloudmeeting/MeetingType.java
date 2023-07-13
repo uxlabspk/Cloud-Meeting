@@ -9,7 +9,6 @@ import android.widget.Button;
 public class MeetingType extends AppCompatActivity {
 
     private Button btn_edu, btn_bus;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -46,7 +46,7 @@ public class Login extends AppCompatActivity {
         Intent parent_Intent = getIntent();
         meeting_type = parent_Intent.getStringExtra("type");
 
-        set_Spinner_Items(meeting_type);
+        // set_Spinner_Items(meeting_type);
 
         TextView create_account_link = (TextView) findViewById(R.id.create_account_link);
 

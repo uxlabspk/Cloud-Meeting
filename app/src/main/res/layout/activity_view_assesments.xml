@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewAssesments">
+
+    <TextView
+        android:id="@+id/new_quizes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfbold"
+        android:text="New Quizes/Assignments"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/txt_color"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assesment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/sfbold"
+        android:textColor="@color/txt_color"
+        android:textSize="14sp"
+        android:text="Solve all numericals of chapter 1 (Physics)"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_quizes" />
+
+    <TextView
+        android:id="@+id/assesment_deadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/sfregular"
+        android:textColor="@color/txt_color"
+        android:textSize="14sp"
+        android:text="June 21 - June 28"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assesment_title" />
+
+    <TextView
+        android:id="@+id/assesment_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/sfregular"
+        android:text="Status : Available"
+        android:textColor="@color/txt_color"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/assesment_deadline"
+        app:layout_constraintTop_toBottomOf="@+id/assesment_title" />
+
+    <TextView
+        android:id="@+id/assesment_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/sfregular"
+        android:text="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi sint, eum velit possimus nemo repellendus earum aliquam, expedita harum blanditiis cum! Et excepturi quae, tempora odit amet voluptatem placeat commodi."
+        android:textColor="@color/txt_color"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assesment_deadline" />
+
+
+    <TextView
+        android:id="@+id/assesment_save_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/sfregular"
+        android:text="00:00 am/pm"
+        android:textColor="@color/txt_color"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assesment_details" />
+
+    <android.widget.Button
+        android:id="@+id/save_btn"
+        android:layout_width="130dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="20dp"
+        android:drawableStart="@drawable/ic_upload"
+        android:paddingStart="5dp"
+        android:text="Upload file"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:background="@drawable/btn_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assesment_details" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

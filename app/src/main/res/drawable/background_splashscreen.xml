@@ -4,4 +4,8 @@
     <item>
         <bitmap android:src="@drawable/ic_logo" android:gravity="center" />
     </item>
+
+    <item android:bottom="30dp">
+        <bitmap android:src="@drawable/copyright" android:gravity="bottom" />
+    </item>
 </layer-list>

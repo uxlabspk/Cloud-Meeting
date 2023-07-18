@@ -59,6 +59,7 @@ public class Login extends AppCompatActivity {
         TextView resetPassword = (TextView) findViewById(R.id.resetPassword);
         resetPassword.setOnClickListener(view -> {
             EditText userName = (EditText) findViewById(R.id.signin_user_email);
+            // user reset link.
             if (!userName.getText().toString().isEmpty())
             {
                 Toast.makeText(this, "Check your email for reset link!", Toast.LENGTH_LONG).show();

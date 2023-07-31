@@ -6,16 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".ProfileEdit">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="5dp" >
+
+    <ImageView
+        android:id="@+id/goBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile Edit"
-        android:textSize="21sp"
-        android:fontFamily="@font/sfbold"
-        android:textColor="@color/txt_color"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        />
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_back"
+        android:backgroundTint="@color/toolbar_icon_colors" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile Edit"
+            android:textSize="21sp"
+            android:fontFamily="@font/sfbold"
+            android:textColor="@color/txt_color" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <ImageView
         android:id="@+id/edit_user_pic"
@@ -23,7 +41,7 @@
         android:layout_height="116dp"
         android:contentDescription="@string/user_profile_str"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/ic_profile" />
 
 

@@ -6,31 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".AssesmentDetails">
 
-    <TextView
-        android:id="@+id/quizz_assignment_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/sfbold"
-        android:text="Quizzes/Assignments Details"
-        android:layout_marginStart="20dp"
-        android:textColor="@color/txt_color"
-        android:textSize="21sp"
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="5dp" >
+
+        <ImageView
+            android:id="@+id/goBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/toolbar_icon_colors" />
+
+        <TextView
+            android:id="@+id/quizz_assignment_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sfbold"
+            android:text="Quizzes/Assignments Details"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/txt_color"
+            android:textSize="21sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.appcompat.widget.Toolbar>
+
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
         android:fontFamily="@font/sfregular"
         android:text="Quiz 1"
+        android:layout_marginTop="100dp"
         android:textColor="@color/txt_color"
         android:textSize="21sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quizz_assignment_details" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"

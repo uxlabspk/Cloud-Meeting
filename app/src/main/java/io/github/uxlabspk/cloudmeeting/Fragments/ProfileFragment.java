@@ -43,14 +43,14 @@ public class ProfileFragment extends Fragment {
         binding.eduWhiteboard.setOnClickListener(view -> startActivity(new Intent(getContext(), DrawingActivity.class)));
         // edu_quizzes_results
         binding.eduQuizzesResults.setOnClickListener(view -> startActivity(new Intent(getContext(), QuizResults.class)));
-        // edu_attendace_report
+        // edu_attendance_report
         binding.eduAttendaceReport.setOnClickListener(view -> startActivity(new Intent(getContext(), Attendance.class)));
         // toggle_ui_mode
         binding.toggleUiMode.setOnClickListener(view -> toggleUIMode());
         // edu_user_logout
         binding.eduUserLogout.setOnClickListener(view -> logoutUser());
 
-        // set dark mode toggler flase
+        // set dark mode toggle
         binding.toggleUiMode.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
     }
 
@@ -62,25 +62,26 @@ public class ProfileFragment extends Fragment {
             editor.putBoolean("NIGHT_MODE", true);
             editor.apply();
             binding.toggleUiMode.setChecked(true);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            Toast.makeText(getContext(), "UI Dark Mode Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Restart App to take effects.", Toast.LENGTH_SHORT).show();
         } else {
             editor.putBoolean("NIGHT_MODE", false);
             editor.apply();
             binding.toggleUiMode.setChecked(false);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            Toast.makeText(getContext(), "UI Light Mode Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Restart App to take effects.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void logoutUser() {
-        // logout the user from our database
-        // Hardcoded Action
+        // logout the user from our database Hardcoded Action.
         clearAllData();
         startActivity(new Intent(getContext(), SplashScreen.class));
     }
 
     private void clearAllData() {
-        // delete all data from device.
+        // Clearing user login state from the device.
+        SharedPreferences userDetails = getActivity().getSharedPreferences("USER_DETAILS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userDetails.edit();
+        editor.putBoolean("IS_LOGIN", false);
+        editor.apply();
     }
 }

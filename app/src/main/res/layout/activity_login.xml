@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="160dp"
         android:src="@drawable/ic_sign_logo"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="90dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

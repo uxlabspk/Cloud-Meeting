@@ -6,22 +6,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Attendance">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="5dp" >
+
+    <ImageView
+        android:id="@+id/goBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Attendance"
-        android:textSize="21sp"
-        android:fontFamily="@font/sfbold"
-        android:textColor="@color/txt_color"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        />
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_back"
+        android:backgroundTint="@color/toolbar_icon_colors" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attendance"
+            android:textSize="21sp"
+            android:fontFamily="@font/sfbold"
+            android:textColor="@color/txt_color"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:cardCornerRadius="12dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="100dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp">
 
@@ -138,7 +157,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="165dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="320dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:cardCornerRadius="12dp">

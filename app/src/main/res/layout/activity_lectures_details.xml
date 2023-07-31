@@ -6,18 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".LecturesDetails">
 
-    <TextView
-        android:id="@+id/all_lectures"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sfbold"
-        android:text="All Lectures Details"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/txt_color"
-        android:textSize="18sp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/goBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/toolbar_icon_colors" />
+
+        <TextView
+            android:id="@+id/all_lectures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sfbold"
+            android:text="All Lectures Details"
+            android:textColor="@color/txt_color"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <TextView
         android:id="@+id/lecture_title"
@@ -25,12 +46,12 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sfbold"
         android:text="Physics"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp"
         android:textColor="@color/txt_color"
         android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/all_lectures" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <TextView
         android:id="@+id/lecture_count"

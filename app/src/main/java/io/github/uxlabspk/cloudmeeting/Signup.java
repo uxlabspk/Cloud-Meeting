@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
-
 public class Signup extends AppCompatActivity {
 
     private String meeting_type;
@@ -24,8 +22,7 @@ public class Signup extends AppCompatActivity {
     }
 
 
-    private void init()
-    {
+    private void init() {
         Intent parent_Intent = getIntent();
         meeting_type = parent_Intent.getStringExtra("type");
 
@@ -40,18 +37,14 @@ public class Signup extends AppCompatActivity {
         });
     }
 
-    private void set_Spinner_Items(String meeting_type)
-    {
+    private void set_Spinner_Items(String meeting_type) {
         user_types = (Spinner) findViewById(R.id.user_types);
-        if (meeting_type.equals("bus"))
-        {
+        if (meeting_type.equals("bus")) {
             String[] testArray = {"Admin", "Employee"};
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                     this, android.R.layout.simple_spinner_dropdown_item, testArray );
             user_types.setAdapter(spinnerArrayAdapter);
-        }
-        else
-        {
+        } else {
             String[] testArray = {"Teacher", "Students", "Parent"};
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                     this, android.R.layout.simple_spinner_dropdown_item, testArray );

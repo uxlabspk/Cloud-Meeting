@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.LecturesFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/all_lectures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfbold"
+            android:text="All Lectures"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/txt_color"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/notFound"
         android:layout_width="wrap_content"
@@ -28,52 +54,40 @@
             android:layout_height="match_parent" />
             -->
 
-    <TextView
-        android:id="@+id/all_lectures"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sfbold"
-        android:text="All Lectures"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/txt_color"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/prototype_lectures_box"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/all_lectures"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:cardCornerRadius="4dp">
+        android:layout_marginTop="100dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/class_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mathematics"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
             android:layout_marginStart="20dp"
             android:layout_marginTop="14dp"
-            android:textSize="21sp"/>
+            android:fontFamily="@font/sfregular"
+            android:text="Mathematics"
+            android:textColor="@color/txt_color"
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/lectures_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12 documents, 3 videos"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
             android:layout_marginStart="20dp"
             android:layout_marginTop="45dp"
-            android:textSize="14sp"/>
+            android:fontFamily="@font/sfregular"
+            android:text="12 documents, 3 videos"
+            android:textColor="@color/txt_color"
+            android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -81,35 +95,35 @@
         android:id="@+id/prototype_lectures_box2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/all_lectures"
-        android:layout_marginTop="110dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:cardCornerRadius="4dp">
+        android:layout_marginTop="200dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/class_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Physics"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
             android:layout_marginStart="20dp"
             android:layout_marginTop="14dp"
-            android:textSize="21sp"/>
+            android:fontFamily="@font/sfregular"
+            android:text="Physics"
+            android:textColor="@color/txt_color"
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/lectures_count1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2 documents, 0 videos"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
             android:layout_marginStart="20dp"
             android:layout_marginTop="45dp"
-            android:textSize="14sp"/>
+            android:fontFamily="@font/sfregular"
+            android:text="2 documents, 0 videos"
+            android:textColor="@color/txt_color"
+            android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>
 

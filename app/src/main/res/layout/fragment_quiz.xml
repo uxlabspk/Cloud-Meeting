@@ -7,63 +7,76 @@
     android:background="@color/bg_color"
     tools:context=".Fragments.QuizFragment">
 
-    <TextView
-        android:id="@+id/all_quizes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sfbold"
-        android:text="All Quizes/Assignments"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/txt_color"
-        android:textSize="18sp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/all_quizes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfbold"
+            android:text="All Quizes/Assignments"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/txt_color"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/prototype_assesment_box"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/all_quizes"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:cardCornerRadius="4dp">
+        android:layout_marginTop="100dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/assesment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assignment 1"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
             android:layout_marginStart="20dp"
             android:layout_marginTop="14dp"
-            android:textSize="21sp"/>
+            android:fontFamily="@font/sfregular"
+            android:text="Assignment 1"
+            android:textColor="@color/txt_color"
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/assesment_deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="June 21 - June 28"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
             android:layout_marginStart="20dp"
             android:layout_marginTop="45dp"
-            android:textSize="14sp"/>
+            android:fontFamily="@font/sfregular"
+            android:text="June 21 - June 28"
+            android:textColor="@color/txt_color"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/assesment_notification_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11:00 am"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
             android:layout_marginStart="250dp"
             android:layout_marginTop="30dp"
-            android:textSize="12sp"/>
+            android:fontFamily="@font/sfregular"
+            android:text="11:00 am"
+            android:textColor="@color/txt_color"
+            android:textSize="12sp" />
 
     </androidx.cardview.widget.CardView>
 

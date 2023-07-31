@@ -13,7 +13,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // light dark mode
+        // light dark mode.
         SharedPreferences preferences = getSharedPreferences("THEME_MODE", MODE_PRIVATE);
         boolean isNightMode = preferences.getBoolean("NIGHT_MODE", false);
         if (isNightMode) {
@@ -22,9 +22,14 @@ public class SplashScreen extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        new Handler().postDelayed(() -> {
+            // user login details.
+            SharedPreferences userDetails = getSharedPreferences("USER_DETAILS", MODE_PRIVATE);
+            boolean isLogin = userDetails.getBoolean("IS_LOGIN", false);
+            if (isLogin) {
+                startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                finish();
+            } else {
                 startActivity(new Intent(SplashScreen.this, MeetingType.class));
                 finish();
             }

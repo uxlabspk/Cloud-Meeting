@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class ProfileEdit extends AppCompatActivity {
@@ -19,6 +20,9 @@ public class ProfileEdit extends AppCompatActivity {
     }
 
     private void init() {
+        ImageView goBack = (ImageView) findViewById(R.id.goBack);
+        goBack.setOnClickListener(view -> onBackPressed());
+
         saveBtn = (Button) findViewById(R.id.save_changes);
 
 

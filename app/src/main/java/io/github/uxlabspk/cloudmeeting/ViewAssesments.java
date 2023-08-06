@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -23,6 +24,9 @@ public class ViewAssesments extends AppCompatActivity {
     }
 
     private void init() {
+        ImageView goBack = (ImageView) findViewById(R.id.goBack);
+        goBack.setOnClickListener(view -> onBackPressed());
+
         save_btn = (Button) findViewById(R.id.save_btn);
         timeStamp = (TextView) findViewById(R.id.assesment_save_time);
 

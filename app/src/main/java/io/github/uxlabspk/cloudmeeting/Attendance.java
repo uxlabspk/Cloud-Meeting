@@ -3,8 +3,10 @@ package io.github.uxlabspk.cloudmeeting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Attendance extends AppCompatActivity {
@@ -21,6 +23,10 @@ public class Attendance extends AppCompatActivity {
     }
 
     private void init() {
+        // goBack
+        ImageView goBack = (ImageView) findViewById(R.id.goBack);
+        goBack.setOnClickListener(view -> onBackPressed());
+
         view_attendance_details = (TextView) findViewById(R.id.view_details);
         attendance_details_card = (CardView) findViewById(R.id.attendance_details_card);
 

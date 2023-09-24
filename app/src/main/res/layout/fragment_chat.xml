@@ -9,9 +9,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:background="@drawable/bg_toolbar"
-        android:elevation="5dp"
+        android:elevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,14 +21,50 @@
             android:id="@+id/all_chats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="start"
             android:fontFamily="@font/sfbold"
             android:text="All Chats"
             android:textColor="@color/txt_color"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/refreshStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/refreshStatusIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/toolbar_icon_colors"
+                android:background="@drawable/ic_working" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Refreshing"
+                android:fontFamily="@font/sfregular"
+                android:textSize="14sp"
+                android:layout_marginStart="2dp"
+                android:textColor="@color/toolbar_icon_colors"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/refreshChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_refresh"
+            android:backgroundTint="@color/toolbar_icon_colors"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -46,6 +82,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/prototype_chat_box"
@@ -92,7 +136,7 @@
             android:fontFamily="@font/sfregular"
             android:text="10:59 am"
             android:textColor="@color/txt_color"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
     </androidx.cardview.widget.CardView>
 

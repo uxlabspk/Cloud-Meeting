@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+
 @SuppressWarnings("All")
 public class PaintView extends View {
+
     public static ArrayList<Path> pathList = new ArrayList<>();
     public static ArrayList<Integer> colorList = new ArrayList<>();
     public ViewGroup.LayoutParams params;
@@ -60,7 +62,7 @@ public class PaintView extends View {
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(x,y);
                 pathList.add(path);
-                colorList.add(currentBrush);
+                colorList.add(Integer.valueOf(currentBrush));
                 invalidate();
                 return true;
             default:
@@ -71,7 +73,7 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         for (int i = 0; i < pathList.size(); i++) {
-            brush.setColor(colorList.get(i));
+            brush.setColor(colorList.get(Integer.valueOf(i)));
             canvas.drawPath(pathList.get(i), brush);
             invalidate();
         }

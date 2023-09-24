@@ -24,6 +24,7 @@ public class ViewAssesments extends AppCompatActivity {
     }
 
     private void init() {
+        // goBack
         ImageView goBack = (ImageView) findViewById(R.id.goBack);
         goBack.setOnClickListener(view -> onBackPressed());
 

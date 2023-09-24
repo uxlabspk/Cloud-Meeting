@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import io.github.uxlabspk.cloudmeeting.databinding.ActivityDrawingBinding;
 
@@ -33,6 +34,8 @@ public class DrawingActivity extends AppCompatActivity {
             currentColor(brush.getColor());
         });
         binding.eraser.setOnClickListener(view -> {
+            Toast.makeText(this, String.valueOf(pathList.size()), Toast.LENGTH_SHORT).show();
+
             pathList.clear();
             colorList.clear();
             path.reset();

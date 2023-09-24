@@ -8,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,10 @@ public class Login extends AppCompatActivity {
     }
 
     private void init() {
+        // goBack
+        ImageView goBack = (ImageView) findViewById(R.id.goBack);
+        goBack.setOnClickListener(view -> onBackPressed());
+
         Intent parent_Intent = getIntent();
         meeting_type = parent_Intent.getStringExtra("type");
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +24,10 @@ public class Signup extends AppCompatActivity {
 
 
     private void init() {
+        // goBack
+        ImageView goBack = (ImageView) findViewById(R.id.goBack);
+        goBack.setOnClickListener(view -> onBackPressed());
+
         Intent parent_Intent = getIntent();
         meeting_type = parent_Intent.getStringExtra("type");
 

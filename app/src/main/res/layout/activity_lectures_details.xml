@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:background="@drawable/bg_toolbar"
         android:elevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,6 @@
             android:id="@+id/goBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:background="@drawable/ic_back"
             android:backgroundTint="@color/toolbar_icon_colors" />
 
@@ -28,14 +27,12 @@
             android:id="@+id/all_lectures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
             android:fontFamily="@font/sfbold"
             android:text="All Lectures Details"
             android:textColor="@color/txt_color"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center"
+            />
 
     </androidx.appcompat.widget.Toolbar>
 

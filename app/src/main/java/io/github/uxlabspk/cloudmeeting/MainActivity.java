@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         checkForBatteryOptimization();
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navView);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commitNow();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment;
             switch (item.getItemId()) {

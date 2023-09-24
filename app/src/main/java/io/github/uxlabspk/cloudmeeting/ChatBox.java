@@ -13,10 +13,8 @@ public class ChatBox extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_box);
 
+        // goBack
         ImageView back = findViewById(R.id.goBack);
-
-        back.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        back.setOnClickListener(view -> onBackPressed());
     }
 }

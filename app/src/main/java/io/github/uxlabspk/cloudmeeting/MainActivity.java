@@ -21,19 +21,25 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        init(savedInstanceState);
     }
 
-    private void init() {
+    private void init(Bundle savedInstanceState) {
+        // Calling battery optimizer function.
         checkForBatteryOptimization();
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navView);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navView);
+        // If transaction is performed.
+        // On UI refresh, No transaction will occur.
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
+        }
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment;
             switch (item.getItemId()) {
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    /**
+    /*
      * Disable battery optimization
      */
     public void checkForBatteryOptimization() {

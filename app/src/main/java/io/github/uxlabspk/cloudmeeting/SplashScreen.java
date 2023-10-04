@@ -13,17 +13,9 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // light dark mode.
-        SharedPreferences preferences = getSharedPreferences("THEME_MODE", MODE_PRIVATE);
-        boolean isNightMode = preferences.getBoolean("NIGHT_MODE", false);
-        if (isNightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        setAppTheme();
 
         new Handler().postDelayed(() -> {
-            // user login details.
             SharedPreferences userDetails = getSharedPreferences("USER_DETAILS", MODE_PRIVATE);
             boolean isLogin = userDetails.getBoolean("IS_LOGIN", false);
             if (isLogin) {
@@ -34,5 +26,16 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         }, 1500);
+    }
+
+    private void setAppTheme() {
+        // toggle app theme.
+        SharedPreferences preferences = getSharedPreferences("THEME_MODE", MODE_PRIVATE);
+        boolean isNightMode = preferences.getBoolean("NIGHT_MODE", false);
+        if (isNightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 }

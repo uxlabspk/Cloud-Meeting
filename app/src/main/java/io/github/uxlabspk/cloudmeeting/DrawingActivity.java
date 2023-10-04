@@ -34,8 +34,6 @@ public class DrawingActivity extends AppCompatActivity {
             currentColor(brush.getColor());
         });
         binding.eraser.setOnClickListener(view -> {
-            Toast.makeText(this, String.valueOf(pathList.size()), Toast.LENGTH_SHORT).show();
-
             pathList.clear();
             colorList.clear();
             path.reset();

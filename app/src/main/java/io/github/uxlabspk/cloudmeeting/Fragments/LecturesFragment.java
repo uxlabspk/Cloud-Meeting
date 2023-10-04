@@ -4,13 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import io.github.uxlabspk.cloudmeeting.Adapters.AllLecturesAdapter;
+import io.github.uxlabspk.cloudmeeting.Classes.ProgressStatus;
 import io.github.uxlabspk.cloudmeeting.LecturesDetails;
-import io.github.uxlabspk.cloudmeeting.R;
+import io.github.uxlabspk.cloudmeeting.Models.AllLecturesModel;
 import io.github.uxlabspk.cloudmeeting.databinding.FragmentLecturesBinding;
 
 public class LecturesFragment extends Fragment {
@@ -28,6 +33,28 @@ public class LecturesFragment extends Fragment {
     }
 
     private void init() {
-        binding.prototypeLecturesBox2.setOnClickListener(view -> startActivity(new Intent(getContext(), LecturesDetails.class)));
+        // refresh Classes
+        binding.refreshLectures.setOnClickListener(view -> refreshLectures());
+
+        // all lectures
+        ArrayList<AllLecturesModel> allLectures = new ArrayList<>();
+
+        allLectures.add(new AllLecturesModel("Physics", 23));
+        allLectures.add(new AllLecturesModel("Programming", 23));
+        allLectures.add(new AllLecturesModel("Chemistry", 23));
+        allLectures.add(new AllLecturesModel("Mathematics", 23));
+        allLectures.add(new AllLecturesModel("English", 23));
+        allLectures.add(new AllLecturesModel("Urdu", 23));
+
+        AllLecturesAdapter adapter = new AllLecturesAdapter();
+        adapter.setAllLectures(allLectures, getContext());
+        binding.rvLectures.setAdapter(adapter);
+        binding.rvLectures.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void refreshLectures() {
+        ProgressStatus ps = new ProgressStatus(getContext());
+        ps.setTitle("Refreshing...");
+        ps.show();
     }
 }

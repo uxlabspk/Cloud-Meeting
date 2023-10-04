@@ -49,7 +49,6 @@ public class ProfileFragment extends Fragment {
         binding.toggleUiMode.setOnClickListener(view -> toggleUIMode());
         // edu_user_logout
         binding.eduUserLogout.setOnClickListener(view -> logoutUser());
-
         // set dark mode toggle
         binding.toggleUiMode.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
     }
@@ -62,12 +61,12 @@ public class ProfileFragment extends Fragment {
             editor.putBoolean("NIGHT_MODE", true);
             editor.apply();
             binding.toggleUiMode.setChecked(true);
-            Toast.makeText(getContext(), "Restart App to take effects.", Toast.LENGTH_SHORT).show();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             editor.putBoolean("NIGHT_MODE", false);
             editor.apply();
             binding.toggleUiMode.setChecked(false);
-            Toast.makeText(getContext(), "Restart App to take effects.", Toast.LENGTH_SHORT).show();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 

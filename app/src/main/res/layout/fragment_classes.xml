@@ -51,116 +51,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-        <!--
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvClasses"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        -->
+            android:layout_height="match_parent"
+            android:layout_marginBottom="55dp"
+            android:layout_marginTop="60dp"
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/prototype_class_box"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="100dp"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/class_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="14dp"
-            android:fontFamily="@font/sfregular"
-            android:text="Mathematics"
-            android:textColor="@color/txt_color"
-            android:textSize="21sp" />
-
-        <TextView
-            android:id="@+id/class_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="45dp"
-            android:fontFamily="@font/sfregular"
-            android:text="Mon, Tue, Wed, Thu, Fri, Sat"
-            android:textColor="@color/txt_color"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/today_class_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/sfregular"
-            android:text="11:00 am"
-            android:textColor="@color/txt_color"
-            android:textSize="12sp" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/prototype_class2_box"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="4dp">
-
-        <TextView
-            android:id="@+id/class_name2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Physics"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="14dp"
-            android:textSize="21sp"/>
-
-        <TextView
-            android:id="@+id/class_time2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mon, Tue, Wed, Thu, Fri, Sat"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="45dp"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/today_class_time2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="01:00 pm"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="30dp"
-            android:textSize="12sp"/>
-
-    </androidx.cardview.widget.CardView>
-
+            />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/createClass"
+        android:id="@+id/addClasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="100dp"
-        android:visibility="gone"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="80dp"
         android:clickable="true"
         android:src="@drawable/ic_plus"
         app:backgroundTint="@color/primary_color"
@@ -168,5 +75,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/white"
         tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="add button"
         android:focusable="true" />
 </androidx.constraintlayout.widget.ConstraintLayout>

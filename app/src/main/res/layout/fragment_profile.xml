@@ -40,7 +40,8 @@
                android:contentDescription="@string/user_profile_str"
                android:layout_centerHorizontal="true"
                android:layout_marginTop="90dp"
-               android:src="@drawable/ic_profile" />
+               android:background="@drawable/ic_profile"
+               android:backgroundTint="@color/txt_color"/>
 
 
            <LinearLayout

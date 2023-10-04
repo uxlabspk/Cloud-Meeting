@@ -159,54 +159,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:id="@+id/gender_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/user_types"
-                    android:layout_marginTop="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Gender"
-                        android:textColor="@color/txt_color"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/sfregular"
-
-                        />
-
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/edit_user_gender_male"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Male"
-                            android:layout_marginLeft="40dp"
-                            android:fontFamily="@font/sfregular" />
-
-                        <RadioButton
-                            android:id="@+id/edit_user_gender_female"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Female"
-                            android:layout_marginLeft="50dp"
-                            android:fontFamily="@font/sfregular" />
-
-                    </RadioGroup>
-
-                </LinearLayout>
-
                 <android.widget.Button
                     android:id="@+id/save_changes"
                     android:layout_width="match_parent"

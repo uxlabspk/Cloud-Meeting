@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sfbold"
-            android:text="All Quizes/Assignments"
+            android:text="All Quizzes/Assignments"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:textColor="@color/txt_color"
@@ -40,6 +40,20 @@
             android:layout_marginEnd="20dp" />
 
     </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/notFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have any Quizzes or Assignments"
+        android:textColor="@android:color/darker_gray"
+        android:fontFamily="@font/sfbold"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.cardview.widget.CardView
@@ -105,5 +119,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/prototype_assesment_box" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="80dp"
+        android:clickable="true"
+        android:src="@drawable/ic_plus"
+        app:backgroundTint="@color/primary_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="add button"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

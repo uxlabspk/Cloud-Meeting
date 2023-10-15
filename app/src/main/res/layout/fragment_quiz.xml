@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/refreshClasses"
+            android:id="@+id/refreshAssesments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_refresh"
@@ -55,71 +55,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/prototype_assesment_box"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_all_assesments"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="100dp"
-        app:cardCornerRadius="4dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="90dp"
+        android:layout_marginTop="60dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
-        <TextView
-            android:id="@+id/assesment_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="14dp"
-            android:fontFamily="@font/sfregular"
-            android:text="Assignment 1"
-            android:textColor="@color/txt_color"
-            android:textSize="21sp" />
-
-        <TextView
-            android:id="@+id/assesment_deadline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="45dp"
-            android:fontFamily="@font/sfregular"
-            android:text="June 21 - June 28"
-            android:textColor="@color/txt_color"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/assesment_notification_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/sfregular"
-            android:text="11:00 am"
-            android:textColor="@color/txt_color"
-            android:textSize="12sp" />
-
-    </androidx.cardview.widget.CardView>
-
-    <android.widget.Button
-        android:id="@+id/view_results"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/btn_meetings"
-        android:text="View Results"
-        android:fontFamily="@font/sfbold"
-        android:textSize="14sp"
-        android:textAllCaps="false"
-        android:textColor="@color/primary_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prototype_assesment_box" />
-
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addChat"

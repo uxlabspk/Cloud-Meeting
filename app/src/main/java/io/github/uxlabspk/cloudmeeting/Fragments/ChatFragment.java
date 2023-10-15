@@ -59,8 +59,6 @@ public class ChatFragment extends Fragment {
         binding.rvAllChats.setAdapter(adapter);
         binding.rvAllChats.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-
         // show no records found status
         if (allChatUsers.size() == 0)
             binding.notFound.setVisibility(View.VISIBLE);

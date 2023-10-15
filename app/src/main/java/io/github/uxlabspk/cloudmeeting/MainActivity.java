@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         checkForBatteryOptimization();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navView);
-        // If transaction is performed.
+
         // On UI refresh, No transaction will occur.
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();

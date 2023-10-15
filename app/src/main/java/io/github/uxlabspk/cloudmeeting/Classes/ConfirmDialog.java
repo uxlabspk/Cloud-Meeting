@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +20,6 @@ public class ConfirmDialog {
     private TextView dialog_body;
     private Button yes_btn;
     private Button no_btn;
-
     private Type dialog_type;
 
     public ConfirmDialog(Context context, Type dialog_type) {

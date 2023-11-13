@@ -93,6 +93,7 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/sfbold"
+                android:visibility="visible"
                 android:textSize="14sp"
                 android:background="@drawable/btn_primary"
                 android:textAllCaps="false"

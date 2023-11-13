@@ -38,7 +38,7 @@ public class AllAssesmentAdapter extends RecyclerView.Adapter<AllAssesmentAdapte
         holder.assesment_title.setText(allAssesments.get(position).getAssesmentTitle());
         holder.assesment_deadline.setText(allAssesments.get(position).getAssesmentDedline());
 
-        // Assesment Publish Time
+        // Assessment Publish Time
         TimeFormatter timeFormatter = new TimeFormatter(allAssesments.get(position).getAssesmentPublishTime());
         holder.assesment_notification_time.setText(timeFormatter.formattedTime());
 

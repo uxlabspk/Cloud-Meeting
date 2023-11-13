@@ -1,60 +1,120 @@
 package io.github.uxlabspk.cloudmeeting;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import io.github.uxlabspk.cloudmeeting.Classes.ProgressStatus;
+import io.github.uxlabspk.cloudmeeting.databinding.ActivitySignupBinding;
 
 public class Signup extends AppCompatActivity {
 
+    ActivitySignupBinding binding;
     private String meeting_type;
-    private Spinner user_types;
-    private TextView already_account_link;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+
+        binding = ActivitySignupBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         init();
     }
 
-
     private void init() {
+        // firebase init
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         // goBack
-        ImageView goBack = (ImageView) findViewById(R.id.goBack);
-        goBack.setOnClickListener(view -> onBackPressed());
+        binding.goBack.setOnClickListener(view -> onBackPressed());
 
         Intent parent_Intent = getIntent();
         meeting_type = parent_Intent.getStringExtra("type");
 
         set_Spinner_Items(meeting_type);
 
-        already_account_link = (TextView) findViewById(R.id.already_account_link);
+        binding.signupBtn.setOnClickListener(view -> signup());
 
-        already_account_link.setOnClickListener(view -> {
-            Intent i = new Intent(Signup.this, Login.class);
+        binding.alreadyAccountLink.setOnClickListener(view -> {
+            Intent i = new Intent(this, Login.class);
             i.putExtra("type", meeting_type);
             startActivity(i);
         });
     }
 
-    private void set_Spinner_Items(String meeting_type) {
-        user_types = (Spinner) findViewById(R.id.user_types);
-        if (meeting_type.equals("bus")) {
-            String[] testArray = {"Admin", "Employee"};
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_dropdown_item, testArray );
-            user_types.setAdapter(spinnerArrayAdapter);
-        } else {
-            String[] testArray = {"Teacher", "Students", "Parent"};
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_dropdown_item, testArray );
-            user_types.setAdapter(spinnerArrayAdapter);
+    private void signup() {
+        String fullName = binding.editTextNameAddress.getText().toString().trim();
+        String email = binding.editTextEmail.getText().toString().trim();
+        String password = binding.userPassword.getText().toString().trim();
+        String schoolName = binding.schoolName.getText().toString().trim();
+        String schoolClass = binding.sectionName.getText().toString().trim();
+        String userRole = binding.userTypes.getSelectedItem().toString();
+        int Gender = binding.genders.getCheckedRadioButtonId();
+
+        if(!email.matches(emailPattern)){
+            binding.emailLayout.setError("Enter a correct Email");
+        } else if (password.isEmpty() || password.length() < 6)
+        {
+            binding.passwordLayout.setError("Enter at least 6 alphanumeric keys for password");
+        } else{
+            ProgressStatus ps = new ProgressStatus(this);
+            ps.setTitle("Performing Registration");
+            ps.setCanceledOnTouchOutside(false);
+            ps.show();
+
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    ps.dismiss();
+
+                    String UUID = mAuth.getCurrentUser().getUid();
+                    mDatabase.child(UUID).child("Profile").child("userId").setValue(UUID);
+                    mDatabase.child(UUID).child("Profile").child("FullName").setValue(fullName);
+                    mDatabase.child(UUID).child("Profile").child("Email").setValue(email);
+                    mDatabase.child(UUID).child("Profile").child("SchoolName").setValue(schoolName);
+                    mDatabase.child(UUID).child("Profile").child("SchoolClass").setValue(schoolClass);
+                    mDatabase.child(UUID).child("Profile").child("Role").setValue(userRole);
+                    mDatabase.child(UUID).child("Profile").child("Gender").setValue(Gender);
+
+
+                    Intent intent = new Intent(Signup.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else {
+                    ps.dismiss();
+                    Toast.makeText(Signup.this, "Error : " + task.getException(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
+    private void set_Spinner_Items(String meeting_type) {
+        if (meeting_type.equals("bus")) {
+            String[] testArray = {"Admin", "Employee"};
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_spinner_dropdown_item, testArray );
+            binding.userTypes.setAdapter(spinnerArrayAdapter);
+
+            binding.schoolLayout.setHint("Organization Name");
+            binding.sectionLayout.setHint("Department Name");
+        } else {
+            String[] testArray = {"Teacher", "Students", "Parent"};
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_spinner_dropdown_item, testArray );
+            binding.userTypes.setAdapter(spinnerArrayAdapter);
+
+            binding.schoolLayout.setHint("School Name");
+            binding.sectionLayout.setHint("Section Name");
+        }
+    }
 }

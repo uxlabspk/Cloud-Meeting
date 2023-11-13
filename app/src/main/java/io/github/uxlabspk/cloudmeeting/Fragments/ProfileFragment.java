@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
@@ -13,8 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import io.github.uxlabspk.cloudmeeting.Attendance;
+import io.github.uxlabspk.cloudmeeting.Classes.ConfirmDialog;
+import io.github.uxlabspk.cloudmeeting.Classes.Type;
 import io.github.uxlabspk.cloudmeeting.DrawingActivity;
+import io.github.uxlabspk.cloudmeeting.Models.AllChatUsersModel;
 import io.github.uxlabspk.cloudmeeting.ProfileEdit;
 import io.github.uxlabspk.cloudmeeting.QuizResults;
 import io.github.uxlabspk.cloudmeeting.SplashScreen;
@@ -22,6 +33,9 @@ import io.github.uxlabspk.cloudmeeting.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -37,6 +51,27 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init() {
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        // setting user detials.
+        mDatabase.getRef().child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                AllChatUsersModel user = snapshot.getValue(AllChatUsersModel.class);
+                String name = user.getUserName();
+                String email = user.getUserEmail();
+
+                binding.userName.setText(name);
+                binding.userEmail.setText(email);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // edu_edit_profile
         binding.eduEditProfile.setOnClickListener(view -> startActivity(new Intent(getContext(), ProfileEdit.class)));
         // edu_whiteboard
@@ -51,6 +86,27 @@ public class ProfileFragment extends Fragment {
         binding.eduUserLogout.setOnClickListener(view -> logoutUser());
         // set dark mode toggle
         binding.toggleUiMode.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
+        // delete account
+        binding.eduUserDelete.setOnClickListener(view -> {
+            ConfirmDialog cd = new ConfirmDialog(getContext(), Type.CONFIRM);
+            cd.setCanceledOnTouchOutside(false);
+            cd.setDialog_headline("Confirm to Delete");
+            cd.setDialog_body("Are you sure to delete your account and all data?");
+            cd.setYes_btn_text("Delete");
+            cd.setNo_btn_text("Cancel");
+
+            cd.getYes_btn().setOnClickListener(view1 -> {
+                mAuth.getCurrentUser().delete();
+                startActivity(new Intent(getContext(), SplashScreen.class));
+                cd.dismiss();
+            });
+
+            cd.getNo_btn().setOnClickListener(view2 -> {
+                cd.dismiss();
+            });
+
+            cd.show();
+        });
     }
 
     private void toggleUIMode() {
@@ -71,16 +127,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void logoutUser() {
-        // logout the user from our database Hardcoded Action.
-        clearAllData();
+        mAuth.signOut();
         startActivity(new Intent(getContext(), SplashScreen.class));
-    }
-
-    private void clearAllData() {
-        // Clearing user login state from the device.
-        SharedPreferences userDetails = getActivity().getSharedPreferences("USER_DETAILS", MODE_PRIVATE);
-        SharedPreferences.Editor editor = userDetails.edit();
-        editor.putBoolean("IS_LOGIN", false);
-        editor.apply();
     }
 }

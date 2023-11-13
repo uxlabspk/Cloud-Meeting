@@ -16,7 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <TextView
             android:id="@+id/all_chats"
             android:layout_width="wrap_content"
@@ -28,33 +27,6 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/refreshStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" >
-
-            <ImageView
-                android:id="@+id/refreshStatusIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/toolbar_icon_colors"
-                android:background="@drawable/ic_loading" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Refreshing"
-                android:fontFamily="@font/sfregular"
-                android:textSize="14sp"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/toolbar_icon_colors"
-                android:gravity="center"/>
-
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/refreshChat"

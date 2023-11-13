@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import io.github.uxlabspk.cloudmeeting.ChatBox;
 import io.github.uxlabspk.cloudmeeting.Classes.ConfirmDialog;
+import io.github.uxlabspk.cloudmeeting.Classes.TimeFormatter;
 import io.github.uxlabspk.cloudmeeting.Classes.Type;
 import io.github.uxlabspk.cloudmeeting.JoinClass;
 import io.github.uxlabspk.cloudmeeting.Models.AllChatUsersModel;
@@ -43,10 +44,9 @@ public class AllChatUsersAdapter extends RecyclerView.Adapter<AllChatUsersAdapte
         holder.user_last_message.setText(allChatUsers.get(position).getUserLastMessage());
 
         // last seen
-        SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
-        long time = allChatUsers.get(position).getLastSeen();
-        holder.user_last_seen.setText(formatter.format(new Time(Long.parseLong(time + ""))));
-
+        TimeFormatter timeFormatter = new TimeFormatter(allChatUsers.get(position).getLastSeen());
+        holder.user_last_seen.setText(timeFormatter.formattedTime());
+        
         // intent call
         holder.container.setOnClickListener(view -> {
             Intent intent = new Intent(context, ChatBox.class);

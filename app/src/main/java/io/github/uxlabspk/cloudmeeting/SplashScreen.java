@@ -8,17 +8,21 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SplashScreen extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+
         setAppTheme();
 
         new Handler().postDelayed(() -> {
-            SharedPreferences userDetails = getSharedPreferences("USER_DETAILS", MODE_PRIVATE);
-            boolean isLogin = userDetails.getBoolean("IS_LOGIN", false);
-            if (isLogin) {
+            if (mAuth.getCurrentUser() != null) {
                 startActivity(new Intent(SplashScreen.this, MainActivity.class));
                 finish();
             } else {

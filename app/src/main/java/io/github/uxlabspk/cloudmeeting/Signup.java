@@ -2,6 +2,7 @@ package io.github.uxlabspk.cloudmeeting;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import io.github.uxlabspk.cloudmeeting.Classes.ProgressStatus;
+import io.github.uxlabspk.cloudmeeting.Models.Users;
 import io.github.uxlabspk.cloudmeeting.databinding.ActivitySignupBinding;
 
 public class Signup extends AppCompatActivity {
@@ -60,7 +62,14 @@ public class Signup extends AppCompatActivity {
         String schoolName = binding.schoolName.getText().toString().trim();
         String schoolClass = binding.sectionName.getText().toString().trim();
         String userRole = binding.userTypes.getSelectedItem().toString();
-        int Gender = binding.genders.getCheckedRadioButtonId();
+        String Gender = "Not preferred";
+
+        // Setting the user data
+        if (binding.maleGender.isChecked()) {
+            Gender = "male";
+        } else if (binding.femaleGender.isChecked()) {
+            Gender = "female";
+        }
 
         if(!email.matches(emailPattern)){
             binding.emailLayout.setError("Enter a correct Email");
@@ -73,19 +82,15 @@ public class Signup extends AppCompatActivity {
             ps.setCanceledOnTouchOutside(false);
             ps.show();
 
+            String finalGender = Gender;
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     ps.dismiss();
+                    // Setting data into Firebase Database.
+                    final String UUID = mAuth.getCurrentUser().getUid();
 
-                    String UUID = mAuth.getCurrentUser().getUid();
-                    mDatabase.child(UUID).child("Profile").child("userId").setValue(UUID);
-                    mDatabase.child(UUID).child("Profile").child("FullName").setValue(fullName);
-                    mDatabase.child(UUID).child("Profile").child("Email").setValue(email);
-                    mDatabase.child(UUID).child("Profile").child("SchoolName").setValue(schoolName);
-                    mDatabase.child(UUID).child("Profile").child("SchoolClass").setValue(schoolClass);
-                    mDatabase.child(UUID).child("Profile").child("Role").setValue(userRole);
-                    mDatabase.child(UUID).child("Profile").child("Gender").setValue(Gender);
-
+                    Users registerUser = new Users(UUID, fullName, email, schoolName, schoolClass, "" , userRole, finalGender);
+                    mDatabase.child(UUID).child("Profile").setValue(registerUser);
 
                     Intent intent = new Intent(Signup.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -96,6 +101,12 @@ public class Signup extends AppCompatActivity {
                 }
             });
         }
+
+        // Setting local variable in preferences.
+        SharedPreferences pref = getSharedPreferences("User_role", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("User_role", userRole);
+        editor.apply();
     }
 
     private void set_Spinner_Items(String meeting_type) {

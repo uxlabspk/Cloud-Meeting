@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -25,8 +24,7 @@ import io.github.uxlabspk.cloudmeeting.Attendance;
 import io.github.uxlabspk.cloudmeeting.Classes.ConfirmDialog;
 import io.github.uxlabspk.cloudmeeting.Classes.Type;
 import io.github.uxlabspk.cloudmeeting.DrawingActivity;
-import io.github.uxlabspk.cloudmeeting.Models.AllChatUsersModel;
-import io.github.uxlabspk.cloudmeeting.ProfileEdit;
+import io.github.uxlabspk.cloudmeeting.Models.Users;
 import io.github.uxlabspk.cloudmeeting.QuizResults;
 import io.github.uxlabspk.cloudmeeting.SplashScreen;
 import io.github.uxlabspk.cloudmeeting.databinding.FragmentProfileBinding;
@@ -35,7 +33,7 @@ public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private FirebaseDatabase mDatabase;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -51,19 +49,16 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init() {
+        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance();
 
-        // setting user detials.
-        mDatabase.getRef().child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                AllChatUsersModel user = snapshot.getValue(AllChatUsersModel.class);
-                String name = user.getUserName();
-                String email = user.getUserEmail();
-
-                binding.userName.setText(name);
-                binding.userEmail.setText(email);
+                Users userDetails = snapshot.getValue(Users.class);
+                binding.userName.setText(userDetails.getUserName());
+                binding.userEmail.setText(userDetails.getUserEmail());
             }
 
             @Override
@@ -72,8 +67,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        // edu_edit_profile
-        binding.eduEditProfile.setOnClickListener(view -> startActivity(new Intent(getContext(), ProfileEdit.class)));
         // edu_whiteboard
         binding.eduWhiteboard.setOnClickListener(view -> startActivity(new Intent(getContext(), DrawingActivity.class)));
         // edu_quizzes_results

@@ -19,8 +19,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import io.github.uxlabspk.cloudmeeting.Classes.ProgressStatus;
+import io.github.uxlabspk.cloudmeeting.Models.Users;
 import io.github.uxlabspk.cloudmeeting.databinding.ActivityLoginBinding;
 
 public class Login extends AppCompatActivity {
@@ -31,7 +37,7 @@ public class Login extends AppCompatActivity {
     private String emailPattern = "[a-zA-Z\\d._-]+@[a-z]+\\.+[a-z]+";
     private ProgressStatus progressDialog;
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
+    private FirebaseDatabase mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class Login extends AppCompatActivity {
 
         // ready the firebase.
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
 
         // creating click event listeners
         binding.createAccountLink.setOnClickListener(view -> {
@@ -75,8 +82,8 @@ public class Login extends AppCompatActivity {
         });
 
         progressDialog = new ProgressStatus(this);
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+
+        // mUser = mAuth.getCurrentUser();
 
         binding.loginButton.setOnClickListener(view -> {
             performLogin();
@@ -101,6 +108,22 @@ public class Login extends AppCompatActivity {
 
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
                 if(task.isSuccessful()) {
+                    // Determining the user role on login.
+                    mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Users userDetails = snapshot.getValue(Users.class);
+                            SharedPreferences pref = getSharedPreferences("User_role", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("User_role", userDetails.getUserRole().toString());
+                            editor.apply();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(Login.this, "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     progressDialog.dismiss();
                     startActivity(new Intent(Login.this, MainActivity.class));
                     finish();

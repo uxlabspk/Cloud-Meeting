@@ -1,21 +1,21 @@
 package io.github.uxlabspk.cloudmeeting.Models;
 
 public class AllChatUsersModel {
+    private String userID;
     private String userProfilePic, userAbout;
-    private String userName, userEmail, userGender, userLastMessage, userPassword;
+    private String userName, userEmail, userLastMessage;
     private long lastSeen;
 
-    public AllChatUsersModel(String userName, String userLastMessage, long lastSeen) {
-        this.userName = userName;
-        this.userLastMessage = userLastMessage;
-        this.lastSeen = lastSeen;
+    public AllChatUsersModel() {
     }
-
-    public AllChatUsersModel(String userName, String userEmail, String userGender, String userPassword) {
+    public AllChatUsersModel(String userID, String userProfilePic, String userAbout, String userName, String userEmail, String userLastMessage, long lastSeen) {
+        this.userID = userID;
+        this.userProfilePic = userProfilePic;
+        this.userAbout = userAbout;
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userGender = userGender;
-        this.userPassword = userPassword;
+        this.userLastMessage = userLastMessage;
+        this.lastSeen = lastSeen;
     }
 
     public String getUserProfilePic() {
@@ -50,28 +50,12 @@ public class AllChatUsersModel {
         this.userEmail = userEmail;
     }
 
-    public String getUserGender() {
-        return userGender;
-    }
-
-    public void setUserGender(String userGender) {
-        this.userGender = userGender;
-    }
-
     public String getUserLastMessage() {
         return userLastMessage;
     }
 
     public void setUserLastMessage(String userLastMessage) {
         this.userLastMessage = userLastMessage;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
     }
 
     public long getLastSeen() {

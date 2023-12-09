@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ import io.github.uxlabspk.cloudmeeting.Attendance;
 import io.github.uxlabspk.cloudmeeting.Classes.ConfirmDialog;
 import io.github.uxlabspk.cloudmeeting.Classes.Type;
 import io.github.uxlabspk.cloudmeeting.DrawingActivity;
+import io.github.uxlabspk.cloudmeeting.MeetingType;
 import io.github.uxlabspk.cloudmeeting.Models.Users;
 import io.github.uxlabspk.cloudmeeting.QuizResults;
 import io.github.uxlabspk.cloudmeeting.SplashScreen;
@@ -49,9 +51,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init() {
-        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance();
+         // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+         mAuth = FirebaseAuth.getInstance();
+         mDatabase = FirebaseDatabase.getInstance();
+
 
         mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -89,7 +92,7 @@ public class ProfileFragment extends Fragment {
             cd.setNo_btn_text("Cancel");
 
             cd.getYes_btn().setOnClickListener(view1 -> {
-                mAuth.getCurrentUser().delete();
+                 mAuth.getCurrentUser().delete();
                 startActivity(new Intent(getContext(), SplashScreen.class));
                 cd.dismiss();
             });
@@ -121,6 +124,6 @@ public class ProfileFragment extends Fragment {
 
     private void logoutUser() {
         mAuth.signOut();
-        startActivity(new Intent(getContext(), SplashScreen.class));
+        startActivity(new Intent(getContext(), MeetingType.class));
     }
 }

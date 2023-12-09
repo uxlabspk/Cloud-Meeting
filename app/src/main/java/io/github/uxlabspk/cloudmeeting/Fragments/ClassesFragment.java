@@ -64,9 +64,6 @@ public class ClassesFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
-        // on chat refresh
-        binding.refreshClasses.setOnClickListener(view -> refreshClasses());
-
         // on add class
         binding.addClasses.setOnClickListener(view -> {
             startActivity(new Intent(getContext(), add_classes_activity.class));
@@ -150,12 +147,6 @@ public class ClassesFragment extends Fragment {
 //
 
 
-    }
-
-    private void refreshClasses() {
-        ProgressStatus ps = new ProgressStatus(getContext());
-        ps.setTitle("Refreshing...");
-        ps.show();
     }
 
     private void getClasses() {

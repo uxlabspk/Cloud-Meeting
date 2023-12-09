@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -18,13 +19,23 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         setAppTheme();
 
         new Handler().postDelayed(() -> {
             if (mAuth.getCurrentUser() != null) {
-                startActivity(new Intent(SplashScreen.this, MainActivity.class));
-                finish();
+
+                SharedPreferences pref = getSharedPreferences("User_role", MODE_PRIVATE);
+                String userRole = pref.getString("User_role", null);
+
+                if (userRole.equals("Teacher") | userRole.equals("Student")) {
+                    startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(SplashScreen.this, business.class));
+                    finish();
+                }
             } else {
                 startActivity(new Intent(SplashScreen.this, MeetingType.class));
                 finish();

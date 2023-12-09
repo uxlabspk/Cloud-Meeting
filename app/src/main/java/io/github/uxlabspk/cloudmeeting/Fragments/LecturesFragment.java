@@ -33,8 +33,6 @@ public class LecturesFragment extends Fragment {
     }
 
     private void init() {
-        // refresh Classes
-        binding.refreshLectures.setOnClickListener(view -> refreshLectures());
 
         // all lectures
         ArrayList<AllLecturesModel> allLectures = new ArrayList<>();

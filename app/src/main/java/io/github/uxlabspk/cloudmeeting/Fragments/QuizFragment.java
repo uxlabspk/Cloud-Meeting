@@ -36,8 +36,6 @@ public class QuizFragment extends Fragment {
     }
 
     private void init() {
-        // refreshAssesments
-        binding.refreshAssesments.setOnClickListener(view -> refreshAssesments());
 
         ArrayList<AllAssesmentsModel> allAssesments = new ArrayList<>();
 

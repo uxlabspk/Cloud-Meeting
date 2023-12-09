@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,15 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import io.github.uxlabspk.cloudmeeting.Adapters.AllChatUsersAdapter;
-import io.github.uxlabspk.cloudmeeting.ChatBox;
-import io.github.uxlabspk.cloudmeeting.Classes.ConfirmDialog;
 import io.github.uxlabspk.cloudmeeting.Classes.ProgressStatus;
-import io.github.uxlabspk.cloudmeeting.Classes.Type;
 import io.github.uxlabspk.cloudmeeting.ContactList;
 import io.github.uxlabspk.cloudmeeting.Models.AllChatUsersModel;
-import io.github.uxlabspk.cloudmeeting.R;
 import io.github.uxlabspk.cloudmeeting.databinding.FragmentChatBinding;
-import io.github.uxlabspk.cloudmeeting.databinding.FragmentProfileBinding;
 
 
 public class ChatFragment extends Fragment {
@@ -60,7 +52,6 @@ public class ChatFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance();
 
         // on chat refresh
-        binding.refreshChat.setOnClickListener(view -> refreshChat());
 
         // on add contacts
         binding.addChat.setOnClickListener(view -> {
@@ -71,20 +62,12 @@ public class ChatFragment extends Fragment {
         ArrayList<AllChatUsersModel> allChatUsers = new ArrayList<>();
         AllChatUsersAdapter adapter = new AllChatUsersAdapter();
         adapter.setAllChatUsers(allChatUsers, getContext());
+        binding.rvAllChats.setAdapter(adapter);
         binding.rvAllChats.setLayoutManager(new LinearLayoutManager(getContext()));
         getUsers();
     }
 
-    private void refreshChat() {
-        ps = new ProgressStatus(getContext());
-        ps.setTitle("Refreshing...");
-        ps.show();
-
-        getUsers();
-    }
-
     private void getUsers() {
-//        ps.dismiss();
         mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Chat").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

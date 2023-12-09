@@ -26,15 +26,6 @@
             android:textColor="@color/txt_color"
             android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/refreshClasses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_refresh"
-            android:backgroundTint="@color/toolbar_icon_colors"
-            android:layout_gravity="end"
-            android:layout_marginEnd="20dp" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
@@ -52,15 +43,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp"
+        android:layout_marginTop="60dp">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvClasses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="55dp"
-            android:layout_marginTop="60dp"
-
-
             />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addClasses"

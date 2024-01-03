@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 import io.github.uxlabspk.cloudmeeting.Classes.TimeFormatter;
@@ -34,7 +36,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AllMessagesModel message = allMessages.get(position);
 
-        if (message.getSentBy().equals(AllMessagesModel.SENT_BY_ME)) {
+        if (message.getSentBy().matches(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             holder.left_chat_view.setVisibility(View.GONE);
             holder.right_chat_view.setVisibility(View.VISIBLE);
             holder.right_chat_text.setText(message.getMessage());

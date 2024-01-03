@@ -59,8 +59,8 @@ public class ChatFragment extends Fragment {
         });
 
         // getting list of users.
-        ArrayList<AllChatUsersModel> allChatUsers = new ArrayList<>();
-        AllChatUsersAdapter adapter = new AllChatUsersAdapter();
+        allChatUsers = new ArrayList<>();
+        adapter = new AllChatUsersAdapter();
         adapter.setAllChatUsers(allChatUsers, getContext());
         binding.rvAllChats.setAdapter(adapter);
         binding.rvAllChats.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -68,19 +68,19 @@ public class ChatFragment extends Fragment {
     }
 
     private void getUsers() {
-        mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Chat").addValueEventListener(new ValueEventListener() {
+        mDatabase.getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Chat").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                allChatUsers.clear();
+                binding.notFound.setVisibility(View.GONE);
 
                 if (snapshot.exists()) {
-                    binding.notFound.setVisibility(View.GONE);
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        // AllChatUsersModel model = dataSnapshot.getValue(AllChatUsersModel.class);
-                        // allChatUsers.add(model);
-                        String data = dataSnapshot.getValue(String.class);
-//                        allChatUsers.add(data);
+                    if (allChatUsers != null) allChatUsers.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        AllChatUsersModel model = ds.getValue(AllChatUsersModel.class);
+                        allChatUsers.add(model);
                     }
+
+
                     binding.rvAllChats.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {

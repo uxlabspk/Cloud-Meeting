@@ -2,14 +2,15 @@ package io.github.uxlabspk.cloudmeeting.Models;
 
 public class AllMessagesModel {
 
-    public static String SENT_BY_ME = "me";
-    public static String SENT_BY_YOU = "you";
-
     private String message;
     private String sentBy;
     private long sentTime;
 
     private boolean isSeen;
+
+    public AllMessagesModel() {
+        // empty constructor
+    }
 
     public long getSentTime() {
         return sentTime;

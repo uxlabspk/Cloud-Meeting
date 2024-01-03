@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jitsi.meet.sdk.JitsiMeet;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
+import org.jitsi.meet.sdk.JitsiMeetUserInfo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,8 +46,12 @@ import io.github.uxlabspk.cloudmeeting.databinding.FragmentClassesBinding;
 public class ClassesFragment extends Fragment {
 
     FragmentClassesBinding binding;
+    private ArrayList<AllClassesModel> allClass;
+    private AllClassesAdapter adapter;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
+
+    private String userSection;
     public ClassesFragment() {
         // Required empty public constructor
     }
@@ -70,99 +75,51 @@ public class ClassesFragment extends Fragment {
         });
 
         // getting list of users.
-        ArrayList<AllChatUsersModel> allChatUsers = new ArrayList<>();
-        AllChatUsersAdapter adapter = new AllChatUsersAdapter();
-        adapter.setAllChatUsers(allChatUsers, getContext());
+        allClass = new ArrayList<>();
+        adapter = new AllClassesAdapter();
+        adapter.setAllClasses(allClass, getContext());
         binding.rvClasses.setLayoutManager(new LinearLayoutManager(getContext()));
         getClasses();
 
 
-//        // Refresh the classes
-//        binding.refreshClasses.setOnClickListener(view -> refreshClasses());
-//
-//        // determining the user role.
-//        SharedPreferences pref = getActivity().getSharedPreferences("User_role", Context.MODE_PRIVATE);
-//        String userRole = pref.getString("User_role", null);
-//
-//        Toast.makeText(getContext(), userRole, Toast.LENGTH_SHORT).show();
-//
-//        if (userRole.equals("Teacher") || userRole.equals("Admin")) {
-//            binding.addClasses.setVisibility(View.VISIBLE);
-//
-//            binding.addClasses.setOnClickListener(view -> {
-//                startActivity(new Intent(getContext(), add_classes_activity.class));
-//            });
-//
-//        } else {
-//            binding.addClasses.setVisibility(View.GONE);
-//        }
-//
-//        // all classes
-//        ArrayList<AllClassesModel> allClasses = new ArrayList<>();
-//
-//        allClasses.add(new AllClassesModel("Mathematics", "Mon, Tue, Wed, Thr, Fri, Sat", "12:00AM"));
-//        allClasses.add(new AllClassesModel("Physics", "Mon, Tue, Wed, Thr, Fri, Sat", "01:00PM"));
-//
-//        AllClassesAdapter adapter = new AllClassesAdapter();
-//        adapter.setAllClasses(allClasses, getContext());
-//
-//        binding.rvClasses.setAdapter(adapter);
-//        binding.rvClasses.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//
+        // determining the user role.
+        SharedPreferences pref = getActivity().getSharedPreferences("User_role", Context.MODE_PRIVATE);
+        String userRole = pref.getString("User_role", null);
+        userSection = pref.getString("User_class", null);
+
+        // Toast.makeText(getContext(), userRole, Toast.LENGTH_SHORT).show();
+
+        if (userRole.equals("Teacher") || userRole.equals("Admin")) {
+            binding.addClasses.setVisibility(View.VISIBLE);
+
+        } else {
+            binding.addClasses.setVisibility(View.GONE);
+        }
 
 
 
-//        // test class module
-//        binding.addClasses.setOnClickListener(view -> {
-//            // Somewhere early in your app.
-//            JitsiMeetConferenceOptions defaultOptions
-//                    = null;
-//            try {
-//                defaultOptions = new JitsiMeetConferenceOptions.Builder()
-//                .setServerURL(new URL("https://8x8.vc"))
-//                .setFeatureFlag("welcomepage.enabled", false)
-//                 .setConfigOverride("requireDisplayName", false)
-//                .build();
-//            } catch (MalformedURLException e) {
-//                throw new RuntimeException(e);
-//            }
-//            JitsiMeet.setDefaultConferenceOptions(defaultOptions);
-//
-//            JitsiMeetConferenceOptions options
-//                    = new JitsiMeetConferenceOptions.Builder()
-//                    .setToken("eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAvMTUzZjMyLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MDE0MTE4OTcsImV4cCI6MTcwMTQxOTA5NywibmJmIjoxNzAxNDExODkyLCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6IiIsImlkIjoiYXV0aDB8NjRiMTAwYWQ0NWRlMzE1ZTFmODM1MmQ1IiwiYXZhdGFyIjoiIiwiZW1haWwiOiIifX0sInJvb20iOiIqIn0.X_Zl8OdsxH4VCqMyUtrDxUq6Zrl-jRjq2mxBccJ4mefFEqr765S9WytihInWc3otx4bJYUOAM6vIbeHM11BdE2VQGqbJz0R8aLwI9SENyjNBExQ0VBr05fJ7J1J4EbEPSXSerqo_ejDkJ08vDzruq7_3o0sD0_INbS6s4BUdd6idm0uAvtDPLSdw0ijqpVtMkF8-08IApMph8yZ8hQUopiOWhWRfATxJs5qj1GaH54CKtVjxp3YxlKMtakspiR2ggseAIFllbCqr7ANmJLUWzh7IiWNEXetfbdSwVSM8nlMkyBuQDiMvAVX2sEQCfjpDrzr-crRZ1MVVOopGSfZxww")
-//                    .setRoom("vpaas-magic-cookie-be539426b2e04d128a81e57189d4d460" + "/" + "RoomPHYSICES")
-//
-//                    // Settings for audio and video
-//                    //.setAudioMuted(true)
-//                    //.setVideoMuted(true)
-//                    .build();
-//
-//            JitsiMeetActivity.launch(getContext(), options);
-//        });
-//
-//
-//
-//
-
-
+        // add new class module
+        binding.addClasses.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), add_classes_activity.class));
+        });
     }
 
     private void getClasses() {
-        mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Class").addValueEventListener(new ValueEventListener() {
+        mDatabase.getReference().child("Class").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     binding.notFound.setVisibility(View.GONE);
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {};
-                        Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator );
-//                        HashMap<String, String> data = (HashMap<String, String>) dataSnapshot.getValue(HashMap.class);
-//                        allChatUsers.add(data);
+                        AllClassesModel classesModel = dataSnapshot.getValue(AllClassesModel.class);
+                        if (classesModel.getSectionName().matches(userSection)) {
+                            allClass.add(classesModel);
+                        } else {
+                            continue;
+                        }
                     }
-//                    binding.rvClasses.setAdapter();
-//                    adapter.notifyDataSetChanged();
+                    binding.rvClasses.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } else {
                     binding.notFound.setVisibility(View.VISIBLE);
                 }

@@ -2,6 +2,7 @@ package io.github.uxlabspk.cloudmeeting.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -39,19 +45,24 @@ public class AllChatUsersAdapter extends RecyclerView.Adapter<AllChatUsersAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Query query=datasnapshot.child("childname").orderByKey().limitToLast(1);
         // setting date and message
         holder.user_full_name.setText(allChatUsers.get(position).getUserName());
-        holder.user_last_message.setText(allChatUsers.get(position).getUserLastMessage());
+        holder.user_last_message.setText(allChatUsers.get(position).getUserEmail());
+        if (allChatUsers.get(position).getUserProfilePic().isEmpty()) holder.user_avatar.setImageResource(R.drawable.ic_profile);
+        else Picasso.get().load(allChatUsers.get(position).getUserProfilePic()).placeholder(R.drawable.ic_profile).into(holder.user_avatar);
 
         // last seen
         TimeFormatter timeFormatter = new TimeFormatter(allChatUsers.get(position).getLastSeen());
         holder.user_last_seen.setText(timeFormatter.formattedTime());
-        
+
+
         // intent call
         holder.container.setOnClickListener(view -> {
             Intent intent = new Intent(context, ChatBox.class);
             intent.putExtra("userName", holder.user_full_name.getText());
-            intent.putExtra("availability", "offline");
+            intent.putExtra("profileImg", allChatUsers.get(position).getUserProfilePic());
+            intent.putExtra("UID", allChatUsers.get(position).getUserID());
             context.startActivity(intent);
         });
 
@@ -68,6 +79,7 @@ public class AllChatUsersAdapter extends RecyclerView.Adapter<AllChatUsersAdapte
             cd.getYes_btn().setOnClickListener(view1 -> {
                 // delete the data here.
                 allChatUsers.remove(position);
+                FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chat").removeValue();
                 notifyDataSetChanged();
                 cd.dismiss();
             });

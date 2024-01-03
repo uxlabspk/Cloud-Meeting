@@ -90,7 +90,7 @@ public class Signup extends AppCompatActivity {
                     final String UUID = mAuth.getCurrentUser().getUid();
 
                     Users registerUser = new Users(UUID, fullName, email, schoolName, schoolClass, "" , userRole, finalGender);
-                    mDatabase.child(UUID).child("Profile").setValue(registerUser);
+                    mDatabase.child("Users").child(UUID).child("Profile").setValue(registerUser);
 
                     Intent intent = new Intent(Signup.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -106,6 +106,8 @@ public class Signup extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("User_role", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("User_role", userRole);
+        editor.putString("User_School", schoolName);
+        editor.putString("User_class", schoolClass);
         editor.apply();
     }
 

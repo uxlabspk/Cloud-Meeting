@@ -15,6 +15,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import io.github.uxlabspk.cloudmeeting.AssesmentsAddAndRemove;
 import io.github.uxlabspk.cloudmeeting.Classes.TimeFormatter;
 import io.github.uxlabspk.cloudmeeting.Models.AllAssesmentsModel;
 import io.github.uxlabspk.cloudmeeting.R;
@@ -39,12 +40,14 @@ public class AllAssesmentAdapter extends RecyclerView.Adapter<AllAssesmentAdapte
         holder.assesment_deadline.setText(allAssesments.get(position).getAssesmentDedline());
 
         // Assessment Publish Time
-        TimeFormatter timeFormatter = new TimeFormatter(allAssesments.get(position).getAssesmentPublishTime());
-        holder.assesment_notification_time.setText(timeFormatter.formattedTime());
+        //TimeFormatter timeFormatter = new TimeFormatter(allAssesments.get(position).getAssesmentPublishTime());
+//        holder.assesment_notification_time.setText(timeFormatter.formattedTime());
 
         // onClick listener
         holder.parent.setOnClickListener(view -> {
-            context.startActivity(new Intent(context, ViewAssesments.class));
+            Intent intent = new Intent(context, AssesmentsAddAndRemove.class);
+            intent.putExtra("className", allAssesments.get(position).getAssesmentTitle());
+            context.startActivity(intent);
         });
     }
 

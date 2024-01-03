@@ -3,11 +3,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +22,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import io.github.uxlabspk.cloudmeeting.Attendance;
 import io.github.uxlabspk.cloudmeeting.Classes.ConfirmDialog;
 import io.github.uxlabspk.cloudmeeting.Classes.Type;
 import io.github.uxlabspk.cloudmeeting.DrawingActivity;
+import io.github.uxlabspk.cloudmeeting.EditProfile;
 import io.github.uxlabspk.cloudmeeting.MeetingType;
 import io.github.uxlabspk.cloudmeeting.Models.Users;
 import io.github.uxlabspk.cloudmeeting.QuizResults;
+import io.github.uxlabspk.cloudmeeting.R;
 import io.github.uxlabspk.cloudmeeting.SplashScreen;
 import io.github.uxlabspk.cloudmeeting.databinding.FragmentProfileBinding;
 
@@ -51,17 +56,18 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init() {
-         // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        // ready the database
          mAuth = FirebaseAuth.getInstance();
          mDatabase = FirebaseDatabase.getInstance();
 
-
-        mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Users userDetails = snapshot.getValue(Users.class);
                 binding.userName.setText(userDetails.getUserName());
                 binding.userEmail.setText(userDetails.getUserEmail());
+                if (userDetails.getUserImgUrl().isEmpty()) binding.userProfilePic.setImageResource(R.drawable.ic_profile);
+                else Picasso.get().load(userDetails.getUserImgUrl()).placeholder(R.drawable.ic_profile).into(binding.userProfilePic);
             }
 
             @Override
@@ -69,7 +75,8 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
+        // edit profile
+        binding.editProfile.setOnClickListener(view -> startActivity(new Intent(getContext(), EditProfile.class)));
         // edu_whiteboard
         binding.eduWhiteboard.setOnClickListener(view -> startActivity(new Intent(getContext(), DrawingActivity.class)));
         // edu_quizzes_results

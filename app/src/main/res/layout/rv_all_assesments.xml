@@ -40,6 +40,7 @@
     <TextView
         android:id="@+id/assesment_notification_time"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:fontFamily="@font/sfregular"
         android:layout_gravity="end"

@@ -109,13 +109,15 @@ public class Login extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
                 if(task.isSuccessful()) {
                     // Determining the user role on login.
-                    mDatabase.getReference().child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+                    mDatabase.getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Users userDetails = snapshot.getValue(Users.class);
                             SharedPreferences pref = getSharedPreferences("User_role", MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putString("User_role", userDetails.getUserRole().toString());
+                            editor.putString("User_School", userDetails.getUserSchool().toString());
+                            editor.putString("User_class", userDetails.getUserClass().toString());
                             editor.apply();
                         }
 

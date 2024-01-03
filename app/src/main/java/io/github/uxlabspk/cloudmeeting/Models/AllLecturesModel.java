@@ -5,15 +5,15 @@ import android.widget.TextView;
 
 public class AllLecturesModel {
     private String class_name_lectures;
-    private int class_lectures_files_count;
+    private String class_lectures_url;
 
     public AllLecturesModel() {
         // empty constructor.
     }
 
-    public AllLecturesModel(String class_name_lectures, int class_lectures_files_count) {
+    public AllLecturesModel(String class_name_lectures, String clas_lectures_url) {
         this.class_name_lectures = class_name_lectures;
-        this.class_lectures_files_count = class_lectures_files_count;
+        this.class_lectures_url = clas_lectures_url;
     }
 
     public String getClass_name_lectures() {
@@ -24,12 +24,11 @@ public class AllLecturesModel {
         this.class_name_lectures = class_name_lectures;
     }
 
-    public int getClass_lectures_files_count() {
-        return class_lectures_files_count;
+    public String getClass_lectures_url() {
+        return class_lectures_url;
     }
 
-    public void setClass_lectures_files_count(int class_lectures_files_count) {
-        this.class_lectures_files_count = class_lectures_files_count;
+    public void setClass_lectures_url(String class_lectures_url) {
+        this.class_lectures_url = class_lectures_url;
     }
-
 }

@@ -2,6 +2,7 @@ package io.github.uxlabspk.cloudmeeting.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,14 +40,16 @@ public class AllClassesAdapter extends RecyclerView.Adapter<AllClassesAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // setting class name and schedule
         holder.class_name.setText(allClasses.get(position).getClass_name());
-        holder.class_shedule.setText(allClasses.get(position).getClass_shedule());
+        holder.class_shedule.setText(allClasses.get(position).getTeacher_id());
 
         // class time
         holder.class_start_time.setText(allClasses.get(position).getClass_start_time());
 
         // starting class intent
         holder.class_container.setOnClickListener(view -> {
-            context.startActivity(new Intent(context, JoinClass.class));
+            Intent intent = new Intent(context, JoinClass.class);
+            intent.putExtra("RoomName", holder.class_name.getText().toString());
+            context.startActivity(intent);
         });
     }
 

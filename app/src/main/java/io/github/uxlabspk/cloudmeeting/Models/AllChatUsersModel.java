@@ -2,19 +2,25 @@ package io.github.uxlabspk.cloudmeeting.Models;
 
 public class AllChatUsersModel {
     private String userID;
-    private String userProfilePic, userAbout;
-    private String userName, userEmail, userLastMessage;
+    private String userProfilePic;
+    private String userName, userEmail;
     private long lastSeen;
 
     public AllChatUsersModel() {
     }
-    public AllChatUsersModel(String userID, String userProfilePic, String userAbout, String userName, String userEmail, String userLastMessage, long lastSeen) {
+
+    public AllChatUsersModel(String userID, String userName, String userEmail, String userProfilePic) {
         this.userID = userID;
-        this.userProfilePic = userProfilePic;
-        this.userAbout = userAbout;
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userLastMessage = userLastMessage;
+        this.userProfilePic = userProfilePic;
+    }
+
+    public AllChatUsersModel(String userID, String userProfilePic, String userName, String userEmail, long lastSeen) {
+        this.userID = userID;
+        this.userProfilePic = userProfilePic;
+        this.userName = userName;
+        this.userEmail = userEmail;
         this.lastSeen = lastSeen;
     }
 
@@ -24,14 +30,6 @@ public class AllChatUsersModel {
 
     public void setUserProfilePic(String userProfilePic) {
         this.userProfilePic = userProfilePic;
-    }
-
-    public String getUserAbout() {
-        return userAbout;
-    }
-
-    public void setUserAbout(String userAbout) {
-        this.userAbout = userAbout;
     }
 
     public String getUserName() {
@@ -50,19 +48,19 @@ public class AllChatUsersModel {
         this.userEmail = userEmail;
     }
 
-    public String getUserLastMessage() {
-        return userLastMessage;
-    }
-
-    public void setUserLastMessage(String userLastMessage) {
-        this.userLastMessage = userLastMessage;
-    }
-
     public long getLastSeen() {
         return lastSeen;
     }
 
     public void setLastSeen(long lastSeen) {
         this.lastSeen = lastSeen;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

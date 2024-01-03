@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddAssesments">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/goBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/toolbar_icon_colors" />
+
+        <TextView
+            android:id="@+id/lecture_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfbold"
+            android:text="New Quiz/Assignment"
+            android:textColor="@color/txt_color"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/assesment_title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:boxStrokeColor="@color/border_color"
+                app:boxStrokeWidth="0dp"
+                android:textColorHint="@color/input_txt_color"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/appLogo">
+
+                <EditText
+                    android:id="@+id/assesmentTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:textColor="@color/input_txt_color"
+                    android:textColorHint="@color/input_txt_color"
+                    android:background="@drawable/bg_input"
+                    android:ems="10"
+                    android:fontFamily="@font/sfregular"
+                    android:hint="Title"
+                    android:inputType="text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/assesment_details_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:boxStrokeColor="@color/border_color"
+                app:boxStrokeWidth="0dp"
+                android:textColorHint="@color/input_txt_color"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/name_layout">
+
+                <EditText
+                    android:id="@+id/assesmentDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_input"
+                    android:textColor="@color/input_txt_color"
+                    android:textColorHint="@color/input_txt_color"
+                    android:ems="10"
+                    android:fontFamily="@font/sfregular"
+                    android:hint="Description"
+                    android:inputType="text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextNameAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/assesment_marks_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:boxStrokeColor="@color/border_color"
+                app:boxStrokeWidth="0dp"
+                android:textColorHint="@color/input_txt_color"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/name_layout">
+
+                <EditText
+                    android:id="@+id/assesmentMarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/bg_input"
+                    android:textColor="@color/input_txt_color"
+                    android:textColorHint="@color/input_txt_color"
+                    android:ems="10"
+                    android:fontFamily="@font/sfregular"
+                    android:hint="Total Marks"
+                    android:inputType="text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextNameAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/assesment_deadline_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:boxStrokeColor="@color/border_color"
+                app:boxStrokeWidth="0dp"
+                android:textColorHint="@color/input_txt_color"
+                app:boxStrokeWidthFocused="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/password_layout">
+
+                <EditText
+                    android:id="@+id/assesmentDeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:textColor="@color/input_txt_color"
+                    android:textColorHint="@color/input_txt_color"
+                    android:background="@drawable/bg_input"
+                    android:ems="10"
+                    android:fontFamily="@font/sfregular"
+                    android:hint="Deadline"
+                    android:inputType="date"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <android.widget.Button
+                android:id="@+id/attachmentBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Attach file"
+                android:textColor="@color/input_txt_color"
+                android:textAllCaps="false"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/btn_meetings"
+                android:fontFamily="@font/sfregular"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textAlignment="textStart"
+                android:layout_marginTop="10dp"
+                android:drawableEnd="@drawable/ic_plus"
+                />
+            <android.widget.Button
+                android:id="@+id/publishBtn"
+                android:layout_width="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="48dp"
+                android:text="Publish"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gender_layout"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_primary"
+                android:fontFamily="@font/sfbold"
+                android:textColor="@color/btn_color"
+                app:backgroundTint="@color/primary_color"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

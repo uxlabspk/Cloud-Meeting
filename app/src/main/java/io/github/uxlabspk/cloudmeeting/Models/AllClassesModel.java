@@ -2,16 +2,48 @@ package io.github.uxlabspk.cloudmeeting.Models;
 
 public class AllClassesModel {
     private String class_name;
-    private String class_shedule;
+    private String teacher_id;
     private String class_start_time;
+    private String lectures_url;
+    private String assesments_url;
+
+    private String sectionName;
 
     public AllClassesModel() {
     }
 
-    public AllClassesModel(String class_name, String class_shedule, String class_start_time) {
+    public AllClassesModel(String sectionName, String class_name, String teacher_id, String class_start_time, String lectures_url, String assesments_url) {
+        this.sectionName = sectionName;
         this.class_name = class_name;
-        this.class_shedule = class_shedule;
+        this.teacher_id = teacher_id;
         this.class_start_time = class_start_time;
+        this.lectures_url = lectures_url;
+        this.assesments_url = assesments_url;
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
+    }
+
+
+    public String getLectures_url() {
+        return lectures_url;
+    }
+
+    public void setLectures_url(String lectures_url) {
+        this.lectures_url = lectures_url;
+    }
+
+    public String getAssesments_url() {
+        return assesments_url;
+    }
+
+    public void setAssesments_url(String assesments_url) {
+        this.assesments_url = assesments_url;
     }
 
     public String getClass_name() {
@@ -22,12 +54,13 @@ public class AllClassesModel {
         this.class_name = class_name;
     }
 
-    public String getClass_shedule() {
-        return class_shedule;
+
+    public String getTeacher_id() {
+        return teacher_id;
     }
 
-    public void setClass_shedule(String class_shedule) {
-        this.class_shedule = class_shedule;
+    public void setTeacher_id(String teacher_id) {
+        this.teacher_id = teacher_id;
     }
 
     public String getClass_start_time() {

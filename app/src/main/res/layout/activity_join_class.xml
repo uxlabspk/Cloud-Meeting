@@ -88,6 +88,7 @@
             </LinearLayout>
 
             <android.widget.Button
+                android:id="@+id/joinClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -106,6 +107,7 @@
                 android:text="Class does not started yet!"
                 android:gravity="center"
                 android:textColor="@color/red"
+                android:visibility="gone"
                 android:fontFamily="@font/sfregular"
                 android:textSize="14sp"
                 />

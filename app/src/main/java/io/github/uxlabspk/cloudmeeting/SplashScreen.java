@@ -18,18 +18,22 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
+        // Ready the firebase
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().getReference().keepSynced(true);
+        mAuth = FirebaseAuth.getInstance();
 
+        // setting the app theme
         setAppTheme();
 
+        // showing Splash Screen.
         new Handler().postDelayed(() -> {
             if (mAuth.getCurrentUser() != null) {
 
                 SharedPreferences pref = getSharedPreferences("User_role", MODE_PRIVATE);
                 String userRole = pref.getString("User_role", null);
 
-                if (userRole.equals("Teacher") | userRole.equals("Student")) {
+                if (userRole.equals("Teacher") || userRole.equals("Students")) {
                     startActivity(new Intent(SplashScreen.this, MainActivity.class));
                     finish();
                 } else {

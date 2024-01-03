@@ -28,20 +28,35 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/notFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have any class"
-        android:textColor="@android:color/darker_gray"
-        android:fontFamily="@font/sfbold"
-        android:textSize="20sp"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/not_found"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Don't have any class"
+            android:textColor="@android:color/darker_gray"
+            android:fontFamily="@font/sfregular"
+            android:textSize="21sp" />
+
+    </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import io.github.uxlabspk.cloudmeeting.ChatBox;
 import io.github.uxlabspk.cloudmeeting.Classes.ProgressStatus;
 import io.github.uxlabspk.cloudmeeting.LecturesDetails;
 import io.github.uxlabspk.cloudmeeting.Models.AllLecturesModel;
@@ -36,18 +37,14 @@ public class AllLecturesAdapter extends RecyclerView.Adapter<AllLecturesAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.class_name_lectures.setText(allLectures.get(position).getClass_name_lectures());
-//        holder.class_lectures_files.setText(allLectures.get(position).getClass_lectures_files_count());
-
-        // download all files as zip
-        holder.class_lectures_files_download.setOnClickListener(view -> {
-            ProgressStatus ps = new ProgressStatus(context);
-            ps.setTitle("downloading...");
-            ps.show();
-            // other logic goes here.
-        });
+        holder.class_lectures_files.setText(allLectures.get(position).getClass_lectures_url());
 
         holder.lecture_container.setOnClickListener(view -> {
-            context.startActivity(new Intent(context, LecturesDetails.class));
+            Intent intent = new Intent(context, LecturesDetails.class);
+            intent.putExtra("className", holder.class_name_lectures.getText());
+            intent.putExtra("lecturesUrl", allLectures.get(position).getClass_name_lectures());
+            context.startActivity(intent);
+
         });
     }
 
@@ -65,7 +62,6 @@ public class AllLecturesAdapter extends RecyclerView.Adapter<AllLecturesAdapter.
         private CardView lecture_container;
         private TextView class_name_lectures;
         private TextView class_lectures_files;
-        private ImageView class_lectures_files_download;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,7 +69,6 @@ public class AllLecturesAdapter extends RecyclerView.Adapter<AllLecturesAdapter.
             lecture_container = itemView.findViewById(R.id.lecture_container);
             class_name_lectures = itemView.findViewById(R.id.class_name_lectures);
             class_lectures_files = itemView.findViewById(R.id.class_lectures_files);
-            class_lectures_files_download = itemView.findViewById(R.id.class_lectures_files_download);
         }
     }
 }

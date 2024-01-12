@@ -36,11 +36,11 @@ import io.github.uxlabspk.cloudmeeting.databinding.FragmentQuizBinding;
 
 public class QuizFragment extends Fragment {
     FragmentQuizBinding binding;
-
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabase;
-
     private String userSection;
+    private String userSchool;
+    private String userRole;
 
     public QuizFragment() {
         // Required empty public constructor
@@ -62,17 +62,31 @@ public class QuizFragment extends Fragment {
         // determining the user role.
         SharedPreferences pref = getActivity().getSharedPreferences("User_role", Context.MODE_PRIVATE);
         userSection = pref.getString("User_class", null);
+        userSchool = pref.getString("User_School", null);
+        userRole = pref.getString("User_role", null);
 
         ArrayList<AllAssesmentsModel> allAssesments = new ArrayList<>();
 
         mDatabase.getReference().child("Class").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    AllClassesModel classesModel = ds.getValue(AllClassesModel.class);
-                    if (userSection.matches(classesModel.getSectionName())) {
-                        AllAssesmentsModel m = new AllAssesmentsModel(classesModel.getClass_name(), "");
-                        allAssesments.add(m);
+                if (!snapshot.exists()) binding.notFound.setVisibility(View.VISIBLE);
+                if (!allAssesments.isEmpty()) allAssesments.clear();
+                else {
+                    binding.notFound.setVisibility(View.GONE);
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        AllClassesModel classesModel = ds.getValue(AllClassesModel.class);
+                        if (userRole.matches("Teacher")) {
+                            if (classesModel.getTeacher_id().matches(mAuth.getCurrentUser().getEmail())) {
+                                AllAssesmentsModel m = new AllAssesmentsModel(classesModel.getClass_name(), classesModel.getAssesments_url());
+                                allAssesments.add(m);
+                            }
+                        } else {
+                            if (userSection.matches(classesModel.getSectionName()) && userSchool.matches(classesModel.getSchoolName())) {
+                                AllAssesmentsModel m = new AllAssesmentsModel(classesModel.getClass_name(), classesModel.getAssesments_url());
+                                allAssesments.add(m);
+                            }
+                        }
                     }
                 }
 
@@ -89,9 +103,4 @@ public class QuizFragment extends Fragment {
         });
     }
 
-    private void refreshAssesments() {
-        ProgressStatus ps = new ProgressStatus(getContext());
-        ps.setTitle("Refreshing...");
-        ps.show();
-    }
 }

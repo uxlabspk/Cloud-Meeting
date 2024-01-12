@@ -2,6 +2,7 @@ package io.github.uxlabspk.cloudmeeting.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
+import io.github.uxlabspk.cloudmeeting.Classes.ConfirmDialog;
+import io.github.uxlabspk.cloudmeeting.Classes.Type;
 import io.github.uxlabspk.cloudmeeting.JoinClass;
 import io.github.uxlabspk.cloudmeeting.Models.AllClassesModel;
 import io.github.uxlabspk.cloudmeeting.R;
@@ -51,6 +57,39 @@ public class AllClassesAdapter extends RecyclerView.Adapter<AllClassesAdapter.Vi
             intent.putExtra("RoomName", holder.class_name.getText().toString());
             context.startActivity(intent);
         });
+
+        // determining the user role.
+        SharedPreferences pref = context.getSharedPreferences("User_role", Context.MODE_PRIVATE);
+        String userRole = pref.getString("User_role", null);
+
+        if (userRole.equals("Teacher") || userRole.equals("Admin")) {
+            // on long hold
+            holder.class_container.setOnLongClickListener(view -> {
+                ConfirmDialog cd = new ConfirmDialog(context, Type.CONFIRM);
+                cd.setCanceledOnTouchOutside(false);
+                cd.setDialog_headline("Confirm to Delete");
+                cd.setDialog_body("Are you sure to delete this class?");
+                cd.setYes_btn_text("Delete");
+                cd.setNo_btn_text("Cancel");
+
+                // yes button click listener
+                cd.getYes_btn().setOnClickListener(view1 -> {
+                    // delete the data here.
+                    allClasses.remove(position);
+                    FirebaseDatabase.getInstance().getReference().child("Class").child(holder.class_name.getText().toString()).removeValue();
+                    notifyDataSetChanged();
+                    cd.dismiss();
+                });
+
+                // no button click listener
+                cd.getNo_btn().setOnClickListener(view2 -> {
+                    cd.dismiss();
+                });
+
+                cd.show();
+                return false;
+            });
+        }
     }
 
     @Override

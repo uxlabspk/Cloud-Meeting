@@ -52,6 +52,7 @@ public class AssesmentDetailsAdapter extends RecyclerView.Adapter<AssesmentDetai
                 intent.putExtra("AssesmentDetails", allAssesments.get(position).getAssesmentDetail().toString());
                 intent.putExtra("AssesmentDeadline", allAssesments.get(position).getAssesmentDeadline().toString());
                 intent.putExtra("AssesmentMarks", allAssesments.get(position).getTotalMarks().toString());
+                intent.putExtra("AssessmentUrl", allAssesments.get(position).getAttachmentUrl().toString());
                 context.startActivity(intent);
             } else if (userRole.equals("Students")){
                 Intent intent = new Intent(context, ViewAssesments.class);
@@ -60,6 +61,7 @@ public class AssesmentDetailsAdapter extends RecyclerView.Adapter<AssesmentDetai
                 intent.putExtra("AssesmentDetails", allAssesments.get(position).getAssesmentDetail().toString());
                 intent.putExtra("AssesmentDeadline", allAssesments.get(position).getAssesmentDeadline().toString());
                 intent.putExtra("AssesmentMarks", allAssesments.get(position).getTotalMarks().toString());
+                intent.putExtra("AssessmentUrl", allAssesments.get(position).getAttachmentUrl().toString());
                 context.startActivity(intent);
             }
         });

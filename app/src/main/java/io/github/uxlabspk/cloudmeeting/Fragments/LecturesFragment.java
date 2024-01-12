@@ -35,6 +35,9 @@ public class LecturesFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private String userSection;
+    private String userSchool;
+
+    private String userRole;
     public LecturesFragment() {
         // Required empty public constructor
     }
@@ -55,17 +58,28 @@ public class LecturesFragment extends Fragment {
         // determining the user role.
         SharedPreferences pref = getActivity().getSharedPreferences("User_role", Context.MODE_PRIVATE);
         userSection = pref.getString("User_class", null);
+        userSchool = pref.getString("User_School", null);
+        userRole = pref.getString("User_role", null);
 
         ArrayList<AllLecturesModel> allLectures = new ArrayList<>();
-
         mDatabase.getReference().child("Class").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) binding.notFound.setVisibility(View.VISIBLE);
+                if (!allLectures.isEmpty()) allLectures.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    binding.notFound.setVisibility(View.GONE);
                     AllClassesModel classesModel = ds.getValue(AllClassesModel.class);
-                    if (userSection.matches(classesModel.getSectionName())) {
-                        AllLecturesModel m = new AllLecturesModel(classesModel.getClass_name(), classesModel.getLectures_url());
-                        allLectures.add(m);
+                    if (userRole.matches("Teacher")) {
+                        if (classesModel.getTeacher_id().matches(mAuth.getCurrentUser().getEmail())) {
+                            AllLecturesModel m = new AllLecturesModel(classesModel.getClass_name(), classesModel.getLectures_url());
+                            allLectures.add(m);
+                        }
+                    } else {
+                        if (userSection.matches(classesModel.getSectionName()) && userSchool.matches(classesModel.getSchoolName())) {
+                            AllLecturesModel m = new AllLecturesModel(classesModel.getClass_name(), classesModel.getLectures_url());
+                            allLectures.add(m);
+                        }
                     }
                 }
 

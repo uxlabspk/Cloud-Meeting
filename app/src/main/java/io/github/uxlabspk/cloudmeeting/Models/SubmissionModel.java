@@ -1,18 +1,17 @@
 package io.github.uxlabspk.cloudmeeting.Models;
 
-public class AssesmentResultModel {
-
+public class SubmissionModel {
     private String submissionUrl;
     private String studentID;
     private String studentMarks;
     private boolean isSubmited;
     private String studentRemarks;
 
-    public AssesmentResultModel() {
+    public SubmissionModel() {
         // empty constructor
     }
 
-    public AssesmentResultModel(String submissionUrl, String studentID, String studentMarks, boolean isSubmited, String studentRemarks) {
+    public SubmissionModel(String submissionUrl, String studentID, String studentMarks, boolean isSubmited, String studentRemarks) {
         this.submissionUrl = submissionUrl;
         this.studentID = studentID;
         this.studentMarks = studentMarks;

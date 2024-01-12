@@ -72,7 +72,6 @@ public class ChatFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 binding.notFound.setVisibility(View.GONE);
-
                 if (snapshot.exists()) {
                     if (allChatUsers != null) allChatUsers.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {

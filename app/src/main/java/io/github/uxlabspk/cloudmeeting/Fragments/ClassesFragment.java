@@ -52,6 +52,9 @@ public class ClassesFragment extends Fragment {
     private FirebaseDatabase mDatabase;
 
     private String userSection;
+    private String userRole;
+
+    private String userSchool;
     public ClassesFragment() {
         // Required empty public constructor
     }
@@ -81,11 +84,11 @@ public class ClassesFragment extends Fragment {
         binding.rvClasses.setLayoutManager(new LinearLayoutManager(getContext()));
         getClasses();
 
-
         // determining the user role.
         SharedPreferences pref = getActivity().getSharedPreferences("User_role", Context.MODE_PRIVATE);
-        String userRole = pref.getString("User_role", null);
+        userRole = pref.getString("User_role", null);
         userSection = pref.getString("User_class", null);
+        userSchool = pref.getString("User_School", null);
 
         // Toast.makeText(getContext(), userRole, Toast.LENGTH_SHORT).show();
 
@@ -95,8 +98,6 @@ public class ClassesFragment extends Fragment {
         } else {
             binding.addClasses.setVisibility(View.GONE);
         }
-
-
 
         // add new class module
         binding.addClasses.setOnClickListener(view -> {
@@ -110,12 +111,17 @@ public class ClassesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     binding.notFound.setVisibility(View.GONE);
+                    if (!allClass.isEmpty()) allClass.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         AllClassesModel classesModel = dataSnapshot.getValue(AllClassesModel.class);
-                        if (classesModel.getSectionName().matches(userSection)) {
-                            allClass.add(classesModel);
+                        if (userRole.matches("Teacher")) {
+                            if (classesModel.getTeacher_id().matches(mAuth.getCurrentUser().getEmail())) {
+                                allClass.add(classesModel);
+                            }
                         } else {
-                            continue;
+                            if (classesModel.getSectionName().matches(userSection) && classesModel.getSchoolName().matches(userSchool)) {
+                                allClass.add(classesModel);
+                            }
                         }
                     }
                     binding.rvClasses.setAdapter(adapter);

@@ -35,197 +35,27 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:cardCornerRadius="12dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Name"
-                    android:fontFamily="@font/sfbold"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"/>
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Muhammad Naveed"
-                    android:fontFamily="@font/sfregular"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="70dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Present"
-                    android:fontFamily="@font/sfbold"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginStart="20dp"/>
-                <TextView
-                    android:id="@+id/user_present_attendance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="08"
-                    android:fontFamily="@font/sfregular"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Absent"
-                    android:fontFamily="@font/sfbold"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginStart="20dp"/>
-                <TextView
-                    android:id="@+id/user_absent_attendance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="02"
-                    android:fontFamily="@font/sfregular"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginStart="12dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="130dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total"
-                    android:fontFamily="@font/sfbold"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginStart="20dp"/>
-                <TextView
-                    android:id="@+id/user_total_attendance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    android:fontFamily="@font/sfregular"
-                    android:textSize="16sp"
-                    android:textColor="@color/txt_color"
-                    android:layout_marginStart="29dp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/view_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/viewAttendanceDetails"
-                android:gravity="center"
-                android:layout_marginTop="170dp"
-                android:textColor="@color/primary_color"
-                android:fontFamily="@font/sfregular"
-                android:textSize="14sp"
-                />
-
-        </androidx.cardview.widget.CardView>
-    
-    <androidx.cardview.widget.CardView
-        android:id="@+id/attendance_details_card"
+    <TextView
+        android:id="@+id/notFound"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
         android:visibility="gone"
+        android:fontFamily="@font/sfregular"
+        android:text="No attendance results found"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="21sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/attendance_data"
         android:layout_width="match_parent"
-        android:layout_height="165dp"
-        android:layout_marginTop="320dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="12dp">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="60dp"
+         />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date/Time"
-                android:fontFamily="@font/sfbold"
-                android:textColor="@color/txt_color"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Attendance"
-                android:fontFamily="@font/sfbold"
-                android:textColor="@color/txt_color"
-                android:textSize="16sp"
-                />
-
-        </LinearLayout>
-
-       <!-- <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/attendance_data"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            /> -->
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="21-04-2023 (10:12 am)                          p"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
-            android:textSize="14sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="60dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="21-04-2023 (10:12 am)                          p"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
-            android:textSize="14sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="90dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="21-04-2023 (10:12 am)                          p"
-            android:fontFamily="@font/sfregular"
-            android:textColor="@color/txt_color"
-            android:textSize="14sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="120dp"/>
-
-    </androidx.cardview.widget.CardView>
 </RelativeLayout>

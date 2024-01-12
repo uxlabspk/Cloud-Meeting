@@ -11,6 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,11 +47,29 @@ public class AllAssesmentAdapter extends RecyclerView.Adapter<AllAssesmentAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.assesment_title.setText(allAssesments.get(position).getAssesmentTitle());
-        holder.assesment_deadline.setText(allAssesments.get(position).getAssesmentDedline());
+//        holder.assesment_deadline.setText(allAssesments.get(position).getAssesmentDedline());
 
-        // Assessment Publish Time
-        //TimeFormatter timeFormatter = new TimeFormatter(allAssesments.get(position).getAssesmentPublishTime());
-//        holder.assesment_notification_time.setText(timeFormatter.formattedTime());
+//        FirebaseStorage.getInstance().getReference().child(allAssesments.get(position).getAssesmentTitle() + "/assesments/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).listAll().addOnCompleteListener(new OnCompleteListener<ListResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<ListResult> task) {
+//                long count = task.getResult().getItems().size();
+//                holder.assesment_deadline.setText(String.valueOf(count) + " Files");
+//            }
+//        });
+        FirebaseDatabase.getInstance().getReference().child("Assesments").child(allAssesments.get(position).getAssesmentTitle()).child("creation").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                holder.assesment_deadline.setText(String.valueOf(count) + " Assesments");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         // onClick listener
         holder.parent.setOnClickListener(view -> {

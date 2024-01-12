@@ -6,15 +6,6 @@ public class AssesmentDetailsModel {
     private String assesmentDeadline;
     private String totalMarks;
     private String className;
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
     private String attachmentUrl;
 
     public AssesmentDetailsModel() {
@@ -29,6 +20,16 @@ public class AssesmentDetailsModel {
         this.attachmentUrl = attachmentUrl;
         this.className = className;
     }
+
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
 
     public AssesmentDetailsModel(String assesmentTitle, String assesmentDetail, String assesmentDeadline, String totalMarks) {
         this.assesmentTitle = assesmentTitle;
@@ -67,5 +68,13 @@ public class AssesmentDetailsModel {
 
     public void setTotalMarks(String totalMarks) {
         this.totalMarks = totalMarks;
+    }
+
+    public String getAttachmentUrl() {
+        return attachmentUrl;
+    }
+
+    public void setAttachmentUrl(String attachmentUrl) {
+        this.attachmentUrl = attachmentUrl;
     }
 }

@@ -73,10 +73,9 @@ public class Signup extends AppCompatActivity {
 
         if(!email.matches(emailPattern)){
             binding.emailLayout.setError("Enter a correct Email");
-        } else if (password.isEmpty() || password.length() < 6)
-        {
+        } else if (password.isEmpty() || password.length() < 6) {
             binding.passwordLayout.setError("Enter at least 6 alphanumeric keys for password");
-        } else{
+        } else {
             ProgressStatus ps = new ProgressStatus(this);
             ps.setTitle("Performing Registration");
             ps.setCanceledOnTouchOutside(false);
@@ -92,9 +91,15 @@ public class Signup extends AppCompatActivity {
                     Users registerUser = new Users(UUID, fullName, email, schoolName, schoolClass, "" , userRole, finalGender);
                     mDatabase.child("Users").child(UUID).child("Profile").setValue(registerUser);
 
-                    Intent intent = new Intent(Signup.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                    if (meeting_type.equals("bus")) {
+                        Intent intent = new Intent(Signup.this, business.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(Signup.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
                 } else {
                     ps.dismiss();
                     Toast.makeText(Signup.this, "Error : " + task.getException(), Toast.LENGTH_SHORT).show();

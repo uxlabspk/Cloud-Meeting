@@ -7,12 +7,15 @@ public class AllClassesModel {
     private String lectures_url;
     private String assesments_url;
 
+    private String schoolName;
+
     private String sectionName;
 
     public AllClassesModel() {
     }
 
-    public AllClassesModel(String sectionName, String class_name, String teacher_id, String class_start_time, String lectures_url, String assesments_url) {
+    public AllClassesModel(String schoolName, String sectionName, String class_name, String teacher_id, String class_start_time, String lectures_url, String assesments_url) {
+        this.schoolName = schoolName;
         this.sectionName = sectionName;
         this.class_name = class_name;
         this.teacher_id = teacher_id;
@@ -69,5 +72,13 @@ public class AllClassesModel {
 
     public void setClass_start_time(String class_start_time) {
         this.class_start_time = class_start_time;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 }

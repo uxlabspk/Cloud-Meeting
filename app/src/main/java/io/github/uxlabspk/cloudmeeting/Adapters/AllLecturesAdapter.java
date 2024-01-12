@@ -2,6 +2,7 @@ package io.github.uxlabspk.cloudmeeting.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -37,7 +46,14 @@ public class AllLecturesAdapter extends RecyclerView.Adapter<AllLecturesAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.class_name_lectures.setText(allLectures.get(position).getClass_name_lectures());
-        holder.class_lectures_files.setText(allLectures.get(position).getClass_lectures_url());
+
+        FirebaseStorage.getInstance().getReference().child(allLectures.get(position).getClass_name_lectures() + "/lectures/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).listAll().addOnCompleteListener(new OnCompleteListener<ListResult>() {
+            @Override
+            public void onComplete(@NonNull Task<ListResult> task) {
+                long count = task.getResult().getItems().size();
+                holder.class_lectures_files.setText(String.valueOf(count) + " Files");
+            }
+        });
 
         holder.lecture_container.setOnClickListener(view -> {
             Intent intent = new Intent(context, LecturesDetails.class);

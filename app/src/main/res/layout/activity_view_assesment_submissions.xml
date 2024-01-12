@@ -53,7 +53,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_submissions"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp"
+        android:layout_marginTop="60dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

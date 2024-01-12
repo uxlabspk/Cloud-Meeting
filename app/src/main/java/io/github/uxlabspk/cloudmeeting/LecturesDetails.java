@@ -23,12 +23,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import io.github.uxlabspk.cloudmeeting.Adapters.LectureDetailsAdapter;
+import io.github.uxlabspk.cloudmeeting.Classes.ProgressStatus;
 import io.github.uxlabspk.cloudmeeting.Models.LectureDetailsModel;
 import io.github.uxlabspk.cloudmeeting.databinding.ActivityLecturesDetailsBinding;
 
@@ -36,9 +39,8 @@ public class LecturesDetails extends AppCompatActivity {
     private ActivityLecturesDetailsBinding binding;
     private String lectureUrl;
     StorageReference storageReference;
-    ProgressDialog dialog;
+    ProgressStatus progressStatus;
     Uri pdfUrl;
-
     private String downloadUrl;
 
     @Override
@@ -54,38 +56,8 @@ public class LecturesDetails extends AppCompatActivity {
         binding.goBack.setOnClickListener(view -> onBackPressed());
 
         // getting data from intent
-        lectureUrl = getIntent().getStringExtra("lecturesUrl");
         binding.lectureTitle.setText(getIntent().getStringExtra("className"));
 
-        // Ready the firebase.
-        storageReference = FirebaseStorage.getInstance().getReference();
-
-        // Ready the Recycler View
-        ArrayList<LectureDetailsModel> lectureDetails = new ArrayList<>();
-
-        binding.notFound.setVisibility(View.VISIBLE);
-
-        // getting lecture files.
-        storageReference.child(getIntent().getStringExtra("className") + "/lectures/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).listAll().addOnSuccessListener(listResult -> {
-              for (StorageReference item : listResult.getItems()) {
-                  item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                      @Override
-                      public void onSuccess(Uri uri) {
-                          downloadUrl = uri.toString();
-                      }
-                  });
-                  LectureDetailsModel model = new LectureDetailsModel(item.getName(), downloadUrl);
-                  lectureDetails.add(model);
-
-                  binding.notFound.setVisibility(View.GONE);
-              }
-
-            LectureDetailsAdapter adapter = new LectureDetailsAdapter();
-            adapter.setLectureDetails(lectureDetails);
-            binding.lectureFiles.setAdapter(adapter);
-            binding.lectureFiles.setLayoutManager(new LinearLayoutManager(LecturesDetails.this));
-
-        });
 
         // determining the user role.
         SharedPreferences pref = getSharedPreferences("User_role", Context.MODE_PRIVATE);
@@ -100,13 +72,51 @@ public class LecturesDetails extends AppCompatActivity {
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
                 // We will be redirected to choose pdf
-                galleryIntent.setType("application/pdf");
+                galleryIntent.setType("application/*");
                 startActivityForResult(galleryIntent, 1);
             });
 
         } else {
             binding.addlectures.setVisibility(View.GONE);
         }
+
+        // get lectures
+        getLectureFile();
+    }
+
+    private void getLectureFile() {
+        // Ready the firebase.
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        // Ready the Recycler View
+        ArrayList<LectureDetailsModel> lectureDetails = new ArrayList<>();
+
+        binding.notFound.setVisibility(View.VISIBLE);
+
+        LectureDetailsModel model = new LectureDetailsModel();
+        // getting lecture files.
+        storageReference.child(getIntent().getStringExtra("className") + "/lectures/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).listAll().addOnSuccessListener(listResult -> {
+            for (StorageReference item : listResult.getItems()) {
+                item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        downloadUrl = uri.toString();
+                        model.setLectureDownloadUrl(downloadUrl);
+                    }
+                });
+                if (!lectureDetails.isEmpty()) lectureDetails.clear();
+                model.setLectureFileName(item.getName());
+                lectureDetails.add(model);
+                binding.notFound.setVisibility(View.GONE);
+            }
+
+            LectureDetailsAdapter adapter = new LectureDetailsAdapter();
+            adapter.setLectureDetails(lectureDetails);
+            adapter.notifyDataSetChanged();
+            binding.lectureFiles.setAdapter(adapter);
+            binding.lectureFiles.setLayoutManager(new LinearLayoutManager(LecturesDetails.this));
+
+        });
     }
 
 
@@ -115,37 +125,41 @@ public class LecturesDetails extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             // Here we are initialising the progress dialog box
-            dialog = new ProgressDialog(this);
-            dialog.setMessage("Uploading");
+            progressStatus = new ProgressStatus(this);
+            progressStatus.setTitle("Uploading");
+            progressStatus.setCanceledOnTouchOutside(true);
 
             // this will show message uploading
-            // while pdf is uploading
-            dialog.show();
+            progressStatus.show();
             pdfUrl = data.getData();
 
             File f = new File(pdfUrl.getLastPathSegment().toString());
 
-            StorageReference filepath = storageReference.child(getIntent().getStringExtra("className") + "/lectures/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + f.getName().replace(".pdf", "") + ".pdf");
-            filepath.putFile(pdfUrl).continueWithTask(new Continuation() {
+            StorageReference filepath = storageReference.child(getIntent().getStringExtra("className") + "/lectures/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + f.getName());// .replace(".pdf", "") + ".pdf");
+
+            filepath.putFile(pdfUrl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public Object then(@NonNull Task task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return filepath.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        // After uploading is done it progress
-                        // dialog box will be dismissed
-                        dialog.dismiss();
-                        Toast.makeText(LecturesDetails.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        dialog.dismiss();
-                        Toast.makeText(LecturesDetails.this, "UploadedFailed", Toast.LENGTH_SHORT).show();
-                    }
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            lectureUrl = uri.toString();
+                            progressStatus.dismiss();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            progressStatus.dismiss();
+                            Toast.makeText(LecturesDetails.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                            getLectureFile();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressStatus.dismiss();
+                            Toast.makeText(LecturesDetails.this, "Failed to Upload", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
         }

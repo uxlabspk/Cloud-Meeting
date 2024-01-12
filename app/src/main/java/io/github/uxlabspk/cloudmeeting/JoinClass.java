@@ -17,7 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.ServerValues;
 
 import org.jitsi.meet.sdk.BroadcastEvent;
 import org.jitsi.meet.sdk.BroadcastIntentHelper;
@@ -28,7 +30,11 @@ import org.jitsi.meet.sdk.JitsiMeetUserInfo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import io.github.uxlabspk.cloudmeeting.Models.AttendanceModel;
 import io.github.uxlabspk.cloudmeeting.Models.Users;
 import io.github.uxlabspk.cloudmeeting.databinding.ActivityJoinClassBinding;
 import timber.log.Timber;
@@ -77,64 +83,31 @@ public class JoinClass extends AppCompatActivity {
         });
 
         // determining the user role.
-        SharedPreferences pref = getSharedPreferences("User_role", Context.MODE_PRIVATE);
-        String userRole = pref.getString("User_role", null);
+//        SharedPreferences pref = getSharedPreferences("User_role", Context.MODE_PRIVATE);
+//        String userRole = pref.getString("User_role", null);
 
-        if (userRole.equals("Teacher") || userRole.equals("Admin")) {
-            URL serverURL;
-            try {
-                serverURL = new URL("https://8x8.vc/vpaas-magic-cookie-be539426b2e04d128a81e57189d4d460/");// "https://meet.jit.si");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Invalid server URL!");
-            }
-            JitsiMeetConferenceOptions defaultOptions
-                    = new JitsiMeetConferenceOptions.Builder()
-                    .setServerURL(serverURL)
-                    // When using JaaS, set the obtained JWT here
-                    //.setToken("MyJWT")
-                    // Different features flags can be set
-//                     .setFeatureFlag("toolbox.enabled", false)
-//                     .setFeatureFlag("filmstrip.enabled", false)
-//                    .setToken("eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAvMTUzZjMyLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MDM5MjUyMDYsImV4cCI6MTcwMzkzMjQwNiwibmJmIjoxNzAzOTI1MjAxLCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOmZhbHNlLCJvdXRib3VuZC1jYWxsIjp0cnVlLCJzaXAtb3V0Ym91bmQtY2FsbCI6ZmFsc2UsInRyYW5zY3JpcHRpb24iOnRydWUsInJlY29yZGluZyI6dHJ1ZX0sInVzZXIiOnsiaGlkZGVuLWZyb20tcmVjb3JkZXIiOmZhbHNlLCJtb2RlcmF0b3IiOnRydWUsIm5hbWUiOiJtdWhhbW1hZG5hdmVlZCIsImlkIjoiYXV0aDB8NjRiMTAwYWQ0NWRlMzE1ZTFmODM1MmQ1IiwiYXZhdGFyIjoiIiwiZW1haWwiOiJtdWhhbW1hZG5hdmVlZGNpc0BnbWFpbC5jb20ifX0sInJvb20iOiIqIn0.WPNEyNAfQqcOYi4q4JLs4tx0ho5OrUhT2PHJ0w_Mzhar2GSGYI6l1s5gYcyFRf_vnZRaIdX1qyFjRfrbm-cN2c0Ly9LlFjw7Khcjj-pqRb20vAHB1rIn1YnBNpw-soVNI57WYbNAF2RVvfovEi2Irc6oerWMwQGF9ZdZiY1LD_5fvqOeH6DBc2_dRag3ECn3WoA1llYWr3r3uJPNFor9MC4zSmExY2yIDeUU7XF5Zbc2tOmnxkOkvoamPG2_m7C0QEsdkREGz1dMYF2vaVbWjih4Yr7ynGkXkLiruzfoleGv4eXUMVtDjtsbkd3GE89Wwzy3eSDzfzTt75hpoNKhKw")
-                    .setFeatureFlag("welcomepage.enabled", false)
-                    .build();
-            JitsiMeet.setDefaultConferenceOptions(defaultOptions);
-
-            registerForBroadcastMessages();
-
-        } else {
-            URL serverURL;
-            try {
-                serverURL = new URL("https://8x8.vc/vpaas-magic-cookie-be539426b2e04d128a81e57189d4d460/");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Invalid server URL!");
-            }
-
-            JitsiMeetConferenceOptions defaultOptions
-                    = new JitsiMeetConferenceOptions.Builder()
-                    .setServerURL(serverURL)
-                    .setToken("eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAvMTUzZjMyLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MDM5MjUyMDYsImV4cCI6MTcwMzkzMjQwNiwibmJmIjoxNzAzOTI1MjAxLCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOmZhbHNlLCJvdXRib3VuZC1jYWxsIjp0cnVlLCJzaXAtb3V0Ym91bmQtY2FsbCI6ZmFsc2UsInRyYW5zY3JpcHRpb24iOnRydWUsInJlY29yZGluZyI6dHJ1ZX0sInVzZXIiOnsiaGlkZGVuLWZyb20tcmVjb3JkZXIiOmZhbHNlLCJtb2RlcmF0b3IiOnRydWUsIm5hbWUiOiJtdWhhbW1hZG5hdmVlZCIsImlkIjoiYXV0aDB8NjRiMTAwYWQ0NWRlMzE1ZTFmODM1MmQ1IiwiYXZhdGFyIjoiIiwiZW1haWwiOiJtdWhhbW1hZG5hdmVlZGNpc0BnbWFpbC5jb20ifX0sInJvb20iOiIqIn0.WPNEyNAfQqcOYi4q4JLs4tx0ho5OrUhT2PHJ0w_Mzhar2GSGYI6l1s5gYcyFRf_vnZRaIdX1qyFjRfrbm-cN2c0Ly9LlFjw7Khcjj-pqRb20vAHB1rIn1YnBNpw-soVNI57WYbNAF2RVvfovEi2Irc6oerWMwQGF9ZdZiY1LD_5fvqOeH6DBc2_dRag3ECn3WoA1llYWr3r3uJPNFor9MC4zSmExY2yIDeUU7XF5Zbc2tOmnxkOkvoamPG2_m7C0QEsdkREGz1dMYF2vaVbWjih4Yr7ynGkXkLiruzfoleGv4eXUMVtDjtsbkd3GE89Wwzy3eSDzfzTt75hpoNKhKw")
-                    // When using JaaS, set the obtained JWT here
-                    //.setToken("MyJWT")
-                    // Different features flags can be set
-                    // .setFeatureFlag("toolbox.enabled", false)
-                    // .setFeatureFlag("filmstrip.enabled", false)
-                    .setFeatureFlag("welcomepage.enabled", false)
-                    .build();
-            JitsiMeet.setDefaultConferenceOptions(defaultOptions);
-
-            registerForBroadcastMessages();
+        URL serverURL;
+        try {
+            serverURL = new URL("https://8x8.vc/vpaas-magic-cookie-be539426b2e04d128a81e57189d4d460/");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Invalid server URL!");
         }
+        JitsiMeetConferenceOptions defaultOptions
+                = new JitsiMeetConferenceOptions.Builder()
+                .setServerURL(serverURL)
+                .setToken("eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAvMTUzZjMyLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MDQ3ODY1NzAsImV4cCI6MTcwNDc5Mzc3MCwibmJmIjoxNzA0Nzg2NTY1LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtYmU1Mzk0MjZiMmUwNGQxMjhhODFlNTcxODlkNGQ0NjAiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6IiIsImlkIjoiYXV0aDB8NjRiMTAwYWQ0NWRlMzE1ZTFmODM1MmQ1IiwiYXZhdGFyIjoiIiwiZW1haWwiOiJtdWhhbW1hZG5hdmVlZGNpc0BnbWFpbC5jb20ifX0sInJvb20iOiIqIn0.Xw4Duw39vyFhBiIpHliu7KNPoHAXRB8RssEF7txfllQWsVLtDKvRDLqLL8_Rh_2K1WeSiH0Hx3CNMPi7QkuYgpwWn1PiR6B4tmR346eAlij0vQNbaTKudrlCX0OFlcj0xaPhV2_P67HtBtI5F7kE0ktm6lzDGC9qWeVUurXry61WS_h63Ui01qFfLA6lfy0xi9jkrDYD2FM2Bg8V7xbZWpvj36UgTTyDz80epEA7sjQVtu9zaZJ2_xdwDm5dqAeTPpjuj8aHWyDVRzIKTOUtxSdREp97_SfzD7XUrHNCkXD5ivk7_aOnyyrfdtw4LsLW2AedYUj0G2IGDQ9GoKOHmQ")
+                .setFeatureFlag("welcomepage.enabled", false)
+                .build();
+        JitsiMeet.setDefaultConferenceOptions(defaultOptions);
+
+        registerForBroadcastMessages();
 
         // join class
         binding.joinClass.setOnClickListener(view -> {
             JitsiMeetUserInfo userInfo = new JitsiMeetUserInfo();
             userInfo.setDisplayName(userName);
 
-            // Build options object for joining the conference. The SDK will merge the default
-            // one we set earlier and this one when joining.
             JitsiMeetConferenceOptions options
                     = new JitsiMeetConferenceOptions.Builder()
                     .setRoom(RoomName)
@@ -143,10 +116,15 @@ public class JoinClass extends AppCompatActivity {
                     .setAudioMuted(binding.audioCheck.isChecked())
                     .setVideoMuted(binding.vdoCheck.isChecked())
                     .build();
-            // Launch the new activity with the given options. The launch() method takes care
-            // of creating the required Intent and passing the options.
+
             JitsiMeetActivity.launch(this, options);
+            markAttendance();
         });
+    }
+
+    private void markAttendance() {
+        AttendanceModel model = new AttendanceModel(ServerValue.TIMESTAMP);
+        mDatabase.getReference().child("Attendance").child(getIntent().getStringExtra("RoomName")).child(mAuth.getCurrentUser().getUid()).push().setValue(model);
     }
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -166,13 +144,6 @@ public class JoinClass extends AppCompatActivity {
     private void registerForBroadcastMessages() {
         IntentFilter intentFilter = new IntentFilter();
 
-        /* This registers for every possible event sent from JitsiMeetSDK
-           If only some of the events are needed, the for loop can be replaced
-           with individual statements:
-           ex:  intentFilter.addAction(BroadcastEvent.Type.AUDIO_MUTED_CHANGED.getAction());
-                intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_TERMINATED.getAction());
-                ... other events
-         */
         for (BroadcastEvent.Type type : BroadcastEvent.Type.values()) {
             intentFilter.addAction(type.getAction());
         }

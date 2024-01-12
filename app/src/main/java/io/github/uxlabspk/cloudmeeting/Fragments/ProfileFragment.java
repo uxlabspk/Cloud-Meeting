@@ -1,6 +1,7 @@
 package io.github.uxlabspk.cloudmeeting.Fragments;
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -60,12 +61,14 @@ public class ProfileFragment extends Fragment {
          mAuth = FirebaseAuth.getInstance();
          mDatabase = FirebaseDatabase.getInstance();
 
+         // getting user data from database.
         mDatabase.getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Users userDetails = snapshot.getValue(Users.class);
-                binding.userName.setText(userDetails.getUserName());
-                binding.userEmail.setText(userDetails.getUserEmail());
+                binding.userName.setText(userDetails.getUserName());    // setting user name
+                binding.userEmail.setText(userDetails.getUserEmail());  // setting user email
+                // setting user photo
                 if (userDetails.getUserImgUrl().isEmpty()) binding.userProfilePic.setImageResource(R.drawable.ic_profile);
                 else Picasso.get().load(userDetails.getUserImgUrl()).placeholder(R.drawable.ic_profile).into(binding.userProfilePic);
             }
@@ -75,20 +78,43 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
         // edit profile
         binding.editProfile.setOnClickListener(view -> startActivity(new Intent(getContext(), EditProfile.class)));
+
         // edu_whiteboard
         binding.eduWhiteboard.setOnClickListener(view -> startActivity(new Intent(getContext(), DrawingActivity.class)));
+
+        // determining the user role
+        SharedPreferences pref = getContext().getSharedPreferences("User_role", Context.MODE_PRIVATE);
+        String userRole = pref.getString("User_role", null);
+
+        if (userRole.matches("Teacher")) {
+            // quizzes hide
+             binding.eduQuizzesResults.setVisibility(View.GONE);
+        }
+
+        if (userRole.matches("Parent")) {
+            // quizzes, attendance hide
+            binding.eduQuizzesResults.setVisibility(View.GONE);
+            binding.eduAttendaceReport.setVisibility(View.GONE);
+        }
+
         // edu_quizzes_results
         binding.eduQuizzesResults.setOnClickListener(view -> startActivity(new Intent(getContext(), QuizResults.class)));
+
         // edu_attendance_report
         binding.eduAttendaceReport.setOnClickListener(view -> startActivity(new Intent(getContext(), Attendance.class)));
-        // toggle_ui_mode
+
+        // toggle_ui_mode (Dark/Light Mode)
         binding.toggleUiMode.setOnClickListener(view -> toggleUIMode());
+
         // edu_user_logout
         binding.eduUserLogout.setOnClickListener(view -> logoutUser());
-        // set dark mode toggle
+
+        // set dark mode toggle (on, off)
         binding.toggleUiMode.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
+
         // delete account
         binding.eduUserDelete.setOnClickListener(view -> {
             ConfirmDialog cd = new ConfirmDialog(getContext(), Type.CONFIRM);
@@ -99,8 +125,9 @@ public class ProfileFragment extends Fragment {
             cd.setNo_btn_text("Cancel");
 
             cd.getYes_btn().setOnClickListener(view1 -> {
-                 mAuth.getCurrentUser().delete();
-                startActivity(new Intent(getContext(), SplashScreen.class));
+                mAuth.getCurrentUser().delete();
+                mDatabase.getReference().child("Users").child(mAuth.getCurrentUser().getUid()).removeValue();
+                startActivity(new Intent(getContext(), MeetingType.class));
                 cd.dismiss();
             });
 
@@ -132,5 +159,6 @@ public class ProfileFragment extends Fragment {
     private void logoutUser() {
         mAuth.signOut();
         startActivity(new Intent(getContext(), MeetingType.class));
+        getActivity().finish();
     }
 }

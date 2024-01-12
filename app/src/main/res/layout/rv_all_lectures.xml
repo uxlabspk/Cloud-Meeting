@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/sfregular"
-            android:text="12 files"
+            android:text=""
             android:textColor="@color/last_message_color"
             android:textSize="14sp" />
 
